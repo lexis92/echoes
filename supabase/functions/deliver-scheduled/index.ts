@@ -48,12 +48,12 @@ Deno.serve(async (req) => {
   for (const row of pending ?? []) {
     const from = row.sender_name ? escapeHtml(row.sender_name) : "Someone";
     const preview = escapeHtml(String(row.content).slice(0, 140));
-    const heading = row.unlocked ? "A sealed message just opened" : "You have a new message";
+    const heading = row.unlocked ? "A locked message just opened" : "You have a new message";
 
     const providerId = await sendEmail({
       to: row.email,
       subject: row.unlocked
-        ? `A sealed message from ${row.sender_name ?? "someone"} just opened`
+        ? `A locked message from ${row.sender_name ?? "someone"} just opened`
         : `${row.sender_name ?? "Someone"} left you a message`,
       text: `${heading}\n\n${from}: ${row.content}\n\nRead it: ${SITE_URL}/messages/${row.message_id}`,
       html: layout(

@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     return fail(403, "voice_disabled", "This profile is not accepting voice notes.");
   }
   if (input.unlockAt && !profile.allow_scheduled) {
-    return fail(403, "scheduling_disabled", "This profile is not accepting sealed messages.");
+    return fail(403, "scheduling_disabled", "This profile is not accepting locked messages.");
   }
 
   // 3. Rate limit per recipient, so one profile cannot be flooded from many IPs.

@@ -10,7 +10,7 @@ const EXCERPTS = [
   { body: "Your grandmother's recipe card turned up behind the dresser.", from: "Mum" },
   { body: "You covered my shift the week my dad was in hospital. It mattered.", from: "Anonymous" },
   { body: "The kiln is not the enemy. The rush is. Your words, back at you.", from: "Rui" },
-  { body: "Sealed until your birthday. No peeking, I know you.", from: "Sealed" },
+  { body: "Locked until your birthday. No peeking, I know you.", from: "Sam" },
 ];
 
 function Row({ reverse = false }: { reverse?: boolean }) {
