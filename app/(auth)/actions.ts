@@ -1,7 +1,6 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { signInSchema, signUpSchema, emailSchema, passwordSchema } from "@/lib/validation";
 import { fieldErrors } from "@/lib/validation";
@@ -13,10 +12,21 @@ import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 // file may only export async functions.
 import type { AuthState } from "./auth-state";
 
-/** Where Supabase should send people back to after clicking an email link. */
-async function callbackUrl(next?: string) {
-  const origin = (await headers()).get("origin") ?? absoluteUrl("/");
-  const url = new URL("/auth/confirm", origin);
+/**
+ * Where Supabase should send people back to after clicking an email link.
+ *
+ * Built from the configured origin, not the request's Origin header. This link
+ * is emailed, so it has to be the canonical address rather than whichever host
+ * the request arrived on, and a header the client controls has no business
+ * deciding where a confirmation link points. resolveSiteOrigin already handles
+ * the local case, so there is nothing left for the header to cover.
+ *
+ * Supabase must also allow this exact URL under Authentication > URL
+ * Configuration. An address that is not on that list is discarded silently and
+ * the link falls back to Site URL, which is how these end up on localhost.
+ */
+function callbackUrl(next?: string) {
+  const url = new URL("/auth/confirm", absoluteUrl("/"));
   if (next) url.searchParams.set("next", next);
   return url.toString();
 }
@@ -82,7 +92,7 @@ export async function signUpAction(
         // Seeds `handle_new_user`, which reserves the closest free username.
         username: String(formData.get("handle") ?? "").trim().toLowerCase() || undefined,
       },
-      emailRedirectTo: await callbackUrl("/setup"),
+      emailRedirectTo: callbackUrl("/setup"),
     },
   });
 
@@ -177,7 +187,7 @@ export async function resendVerificationAction(
   const { error } = await supabase.auth.resend({
     type: "signup",
     email: parsed.data,
-    options: { emailRedirectTo: await callbackUrl("/setup") },
+    options: { emailRedirectTo: callbackUrl("/setup") },
   });
 
   if (error) {
@@ -201,7 +211,7 @@ export async function requestPasswordResetAction(
 
   const supabase = await createClient();
   await supabase.auth.resetPasswordForEmail(parsed.data, {
-    redirectTo: await callbackUrl("/settings?reset=1"),
+    redirectTo: callbackUrl("/settings?reset=1"),
   });
 
   // Always the same answer, so this cannot be used to discover who has an account.

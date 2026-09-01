@@ -193,10 +193,14 @@ changes"* after you save them. That message means the variables saved — deploy
 once and it clears.
 
 Finally, in Supabase → Authentication → URL Configuration, set **Site URL** to
-your deployed address and add `https://<domain>/auth/confirm` as a redirect URL
-(plus `/auth/callback` if you add an OAuth provider later). Skip this and
-everything works except new sign-ups, whose confirmation email would point at
-the wrong host.
+your deployed address and add `https://<domain>/auth/confirm*` as a redirect URL
+(plus `/auth/callback` if you add an OAuth provider later).
+
+This is not optional polish. Supabase discards an `emailRedirectTo` that is not
+on the allow list *without reporting it*, and falls back to Site URL. Leave Site
+URL at its `http://localhost:3000` default and every confirmation link mails out
+pointing at the recipient's own machine, which looks like an app bug and is not
+one. The trailing `*` matters because the app appends a `next` parameter.
 
 ### 4. Email
 
