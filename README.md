@@ -168,8 +168,18 @@ typing each row. Only four are required:
 `VERCEL_PROJECT_PRODUCTION_URL`, which the platform injects. Set it explicitly
 only when serving from a custom domain.
 
-`vercel.json` registers the 15-minute cron and the API cache/robots headers;
+`vercel.json` registers the delivery cron and the API cache/robots headers;
 `next.config.js` sets HSTS, `X-Frame-Options`, `Referrer-Policy` and the rest.
+
+**Cron frequency is plan-dependent.** Vercel's Hobby plan permits at most one
+cron run per day, and a more frequent `schedule` fails the deployment outright
+with a cron error — so `vercel.json` ships with a daily `0 9 * * *`. This is
+less limiting than it sounds: new messages are emailed inline by
+`/api/messages`, so the cron only covers sealed messages whose unlock time has
+passed, plus the trash purge. If you want sealed messages announced promptly,
+run the `deliver-scheduled` edge function on a tighter Supabase schedule
+instead — it does the same work and is not subject to Vercel's plan limits. On
+a paid Vercel plan you can restore `*/15 * * * *` here.
 
 ### 3. Close the loop
 
