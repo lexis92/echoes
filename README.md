@@ -164,9 +164,13 @@ typing each row. Only four are required:
 | `SUPABASE_SERVICE_ROLE_KEY` | **Secret.** Bypasses RLS entirely — set it here, never in git. |
 | `IP_HASH_SALT` | Any long random string. Without it, sender-IP hashing falls back to a development salt. |
 
-`NEXT_PUBLIC_SITE_URL` is optional on Vercel: `absoluteUrl()` falls back to
-`VERCEL_PROJECT_PRODUCTION_URL`, which the platform injects. Set it explicitly
-only when serving from a custom domain.
+**Set `NEXT_PUBLIC_SITE_URL` to your deployed address.** It is tempting to skip
+it, because `absoluteUrl()` does fall back to `VERCEL_PROJECT_PRODUCTION_URL` —
+but that variable is server-only. Next.js exposes nothing but `NEXT_PUBLIC_*`
+to client components, and the share card, profile preview and handle picker all
+build URLs there, so without it they render `localhost:3000` in production.
+`window.location.origin` covers the browser once hydrated; this keeps the
+server-rendered pass correct too.
 
 `vercel.json` registers the delivery cron and the API cache/robots headers;
 `next.config.js` sets HSTS, `X-Frame-Options`, `Referrer-Policy` and the rest.

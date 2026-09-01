@@ -74,7 +74,17 @@ export function hashIndex(input: string, buckets: number) {
  */
 function resolveSiteOrigin(): string {
   const candidates = [
+    // An explicit setting always wins, and because it is NEXT_PUBLIC_* it is
+    // inlined into the browser bundle too, so server and client agree.
     process.env.NEXT_PUBLIC_SITE_URL,
+
+    // In the browser, the address bar is the truth. This matters: the two
+    // variables below are server-only — Next.js inlines nothing but
+    // NEXT_PUBLIC_* into the client bundle — so without this every URL built
+    // inside a client component (share links, the profile preview, the handle
+    // picker) fell back to localhost in production.
+    typeof window !== "undefined" ? window.location.origin : undefined,
+
     process.env.VERCEL_PROJECT_PRODUCTION_URL,
     // Set on every Vercel build, including previews, where the production
     // domain does not exist yet.
