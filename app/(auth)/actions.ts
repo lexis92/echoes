@@ -88,12 +88,39 @@ export async function signInAction(
   const { data, error } = await supabase.auth.signInWithPassword(parsed.data);
 
   if (error) {
-    if (error.message.toLowerCase().includes("email not confirmed")) {
+    const reason = error.message.toLowerCase();
+
+    if (reason.includes("email not confirmed")) {
       redirect(`/verify-email?email=${encodeURIComponent(parsed.data.email)}`);
     }
+
+    // Genuine bad credentials. Deliberately generic: saying "no such account"
+    // would let anyone test whether an address is registered here.
+    if (reason.includes("invalid login credentials") || error.status === 400) {
+      return {
+        status: "error",
+        message: "That email and password do not match an account.",
+      };
+    }
+
+    if (error.status === 429 || reason.includes("rate limit")) {
+      return {
+        status: "error",
+        message: "Too many attempts. Wait a minute and try again.",
+      };
+    }
+
+    // Anything else is our problem, not a wrong password. Previously every
+    // failure — including database and configuration errors — was reported as
+    // bad credentials, which made real faults impossible to diagnose.
+    console.error("[auth] sign-in failed", {
+      status: error.status,
+      code: error.code,
+      message: error.message,
+    });
     return {
       status: "error",
-      message: "That email and password do not match an account.",
+      message: `Sign-in is failing on our side, not yours (${error.message}). This has been logged.`,
     };
   }
 

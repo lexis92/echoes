@@ -65,6 +65,15 @@ module.exports = {
         seal: "0 0 0 1px rgb(var(--ember) / 0.35), 0 8px 20px -10px rgb(var(--ember) / 0.55)",
         inset: "inset 0 1px 0 0 rgb(255 255 255 / 0.55)",
       },
+      spacing: {
+        // Tailwind's default scale jumps 12 → 14. The primary call to action
+        // wants 3.25rem, so `h-13` has to be declared or it silently emits
+        // nothing and the button collapses to its text height.
+        13: "3.25rem",
+        15: "3.75rem",
+        4.5: "1.125rem",
+        5.5: "1.375rem",
+      },
       letterSpacing: {
         label: "0.14em",
         tightest: "-0.035em",
