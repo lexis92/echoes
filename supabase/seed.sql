@@ -13,26 +13,33 @@
 -- --------------------------------------------------------------------------
 -- Auth users. The handle_new_user trigger creates the matching profiles.
 -- --------------------------------------------------------------------------
+-- The token columns matter: Supabase's auth service reads them into plain text
+-- fields and cannot handle NULL. Omitting them produces accounts that exist but
+-- cannot be signed in to or deleted — "Database error loading user".
 insert into auth.users (
   instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
-  raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
+  confirmation_token, recovery_token, email_change, email_change_token_new
 )
 values
   ('00000000-0000-0000-0000-000000000000', '11111111-1111-1111-1111-111111111111',
    'authenticated', 'authenticated', 'maya@echoes.test',
    extensions.crypt('password123', extensions.gen_salt('bf')), now() - interval '120 days',
    '{"provider":"email","providers":["email"]}',
-   '{"name":"Maya Okonkwo"}', now() - interval '120 days', now() - interval '120 days'),
+   '{"name":"Maya Okonkwo"}', now() - interval '120 days', now() - interval '120 days',
+   '', '', '', ''),
   ('00000000-0000-0000-0000-000000000000', '22222222-2222-2222-2222-222222222222',
    'authenticated', 'authenticated', 'theo@echoes.test',
    extensions.crypt('password123', extensions.gen_salt('bf')), now() - interval '40 days',
    '{"provider":"email","providers":["email"]}',
-   '{"name":"Theo Lindqvist"}', now() - interval '40 days', now() - interval '40 days'),
+   '{"name":"Theo Lindqvist"}', now() - interval '40 days', now() - interval '40 days',
+   '', '', '', ''),
   ('00000000-0000-0000-0000-000000000000', '33333333-3333-3333-3333-333333333333',
    'authenticated', 'authenticated', 'newbie@echoes.test',
    extensions.crypt('password123', extensions.gen_salt('bf')), now() - interval '1 day',
    '{"provider":"email","providers":["email"]}',
-   '{"name":"Sam Reyes"}', now() - interval '1 day', now() - interval '1 day')
+   '{"name":"Sam Reyes"}', now() - interval '1 day', now() - interval '1 day',
+   '', '', '', '')
 on conflict (id) do nothing;
 
 insert into auth.identities (

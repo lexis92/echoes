@@ -25,7 +25,14 @@ create table if not exists auth.users (
   raw_app_meta_data  jsonb,
   raw_user_meta_data jsonb,
   created_at         timestamptz default now(),
-  updated_at         timestamptz default now()
+  updated_at         timestamptz default now(),
+  -- Supabase's auth service reads these into non-nullable strings. Modelled
+  -- here so the seed is exercised against the same shape it meets in
+  -- production; leaving them NULL breaks sign-in and user deletion.
+  confirmation_token     varchar(255),
+  recovery_token         varchar(255),
+  email_change           varchar(255),
+  email_change_token_new varchar(255)
 );
 
 create table if not exists auth.identities (
