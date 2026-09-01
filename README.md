@@ -134,17 +134,55 @@ someone their message.
 
 **Vercel + Supabase** is the intended pairing.
 
-1. Create a Supabase project; run `supabase link` then `supabase db push`.
-2. Deploy the edge functions: `npm run functions:deploy`.
-3. In Supabase → Authentication → URL configuration, set the site URL to your
-   domain and add `https://<domain>/auth/confirm` and `/auth/callback` as
-   redirect URLs.
-4. Import the repo into Vercel with **Root Directory = `echoes`**. Set every
-   variable from `.env.example`. `vercel.json` registers the 15-minute cron and
-   the API cache/robots headers; `next.config.js` sets HSTS, `X-Frame-Options`,
-   `Referrer-Policy` and the rest.
-5. Point `NEXT_PUBLIC_SITE_URL` at the production domain — share links, emails
-   and auth redirects are all derived from it.
+### 1. The database
+
+Either `supabase link && supabase db push` with the CLI, or — if you have no
+local Docker — paste the migrations and `seed.sql` into the dashboard's SQL
+Editor in filename order. Both produce the same schema; the SQL Editor route
+needs no tooling at all.
+
+Optionally deploy the scheduled jobs: `npm run functions:deploy`.
+
+### 2. The app
+
+Import the repo at [vercel.com/new](https://vercel.com/new).
+
+**Set Root Directory to `echoes`.** This is the step that bites: the repository
+root holds a different application, so leaving Root Directory blank builds the
+wrong project and every Echoes route 404s. There is no error message — it just
+serves something else.
+
+Then add the environment variables. Vercel's *Environment Variables* panel
+parses a pasted `.env`, so the fastest route is to fill in a copy of
+`.env.example` and paste the whole file into the first **Key** box rather than
+typing each row. Only four are required:
+
+| Variable | Notes |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Your project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | The publishable key. Vercel warns that a `NEXT_PUBLIC_*KEY*` may leak — for this key that is expected and safe; it ships in the client bundle by design, and RLS is what protects the data. |
+| `SUPABASE_SERVICE_ROLE_KEY` | **Secret.** Bypasses RLS entirely — set it here, never in git. |
+| `IP_HASH_SALT` | Any long random string. Without it, sender-IP hashing falls back to a development salt. |
+
+`NEXT_PUBLIC_SITE_URL` is optional on Vercel: `absoluteUrl()` falls back to
+`VERCEL_PROJECT_PRODUCTION_URL`, which the platform injects. Set it explicitly
+only when serving from a custom domain.
+
+`vercel.json` registers the 15-minute cron and the API cache/robots headers;
+`next.config.js` sets HSTS, `X-Frame-Options`, `Referrer-Policy` and the rest.
+
+### 3. Close the loop
+
+Environment variables only take effect on a build, so a project that has never
+deployed reports *"No production deployments found; create one to apply these
+changes"* after you save them. That message means the variables saved — deploy
+once and it clears.
+
+Finally, in Supabase → Authentication → URL Configuration, set **Site URL** to
+your deployed address and add `https://<domain>/auth/confirm` as a redirect URL
+(plus `/auth/callback` if you add an OAuth provider later). Skip this and
+everything works except new sign-ups, whose confirmation email would point at
+the wrong host.
 
 Scheduled work can run from either side and both paths are idempotent
 (`notified_at` is the guard): Vercel Cron hitting `/api/cron/deliver`, or
