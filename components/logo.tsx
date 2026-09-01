@@ -61,7 +61,7 @@ export function Logo({
         "group inline-flex items-center gap-2 rounded-lg transition-opacity hover:opacity-80",
         className
       )}
-      aria-label="Echoes — home"
+      aria-label="Echoes home"
     >
       <LogoMark className="size-7 transition-transform duration-500 ease-seal group-hover:-rotate-6" />
       {showWord && (

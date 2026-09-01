@@ -107,7 +107,7 @@ export function VoiceRecorder({
       toast.error(
         name === "NotAllowedError"
           ? "Microphone access was declined. You can still write your message."
-          : "We could not reach your microphone."
+          : "We couldn't reach your microphone."
       );
     } finally {
       setStarting(false);
@@ -124,7 +124,7 @@ export function VoiceRecorder({
   if (!supported) {
     return (
       <p className="rounded-lg bg-raised px-3.5 py-3 text-sm text-quiet">
-        This browser cannot record audio. Everything else still works.
+        This browser can’t record audio. Everything else still works.
       </p>
     );
   }

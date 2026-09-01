@@ -60,7 +60,7 @@ export function SearchField({
         value={value}
         autoFocus={autoFocus}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Search every message…"
+        placeholder="Search messages…"
         aria-label="Search messages"
         className="h-11 w-full rounded-full border border-ink/12 bg-surface pl-10 pr-10 text-[15px] text-ink shadow-inset transition-colors placeholder:text-faint hover:border-ink/22 focus:border-ember focus:outline-none focus:ring-4 focus:ring-ember/15"
       />

@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     return ok({
       username: candidate.toLowerCase().trim(),
       available: false,
-      reason: parsed.error.issues[0]?.message ?? "That username will not work.",
+      reason: parsed.error.issues[0]?.message ?? "That username won't work.",
     });
   }
 
@@ -44,12 +44,12 @@ export async function GET(request: NextRequest) {
 
   if (error) {
     console.error("[username] availability check failed", error);
-    return ok({ username: parsed.data, available: false, reason: "Could not check right now." });
+    return ok({ username: parsed.data, available: false, reason: "Couldn't check right now." });
   }
 
   return ok({
     username: parsed.data,
     available: data === true,
-    reason: data === true ? null : "Someone already has that one.",
+    reason: data === true ? null : "Taken. Try another.",
   });
 }

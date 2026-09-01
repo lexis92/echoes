@@ -8,9 +8,9 @@ import { prettyProfileUrl } from "@/lib/utils";
 import { cn } from "@/lib/cn";
 
 /**
- * The hero's "claim your handle" field. It does not check availability here —
- * it hands the typed handle to signup, where the real check lives. Asking
- * someone to solve availability before they have an account is a needless wall.
+ * The hero's handle field. Availability is not checked here; the handle is
+ * handed to signup, where the real check happens. Making someone clear an
+ * availability check before they have an account is a needless wall.
  */
 export function ClaimField({ className }: { className?: string }) {
   const router = useRouter();

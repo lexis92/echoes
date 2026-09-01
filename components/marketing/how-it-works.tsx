@@ -5,19 +5,19 @@ const STEPS = [
     n: "01",
     Icon: Link2,
     title: "Claim your link",
-    body: "Pick a handle and you get a page of your own — your name, your photo, a line about what you would like people to write.",
+    body: "Pick a handle. You get a page with your name, your photo, and a line about what you'd like to hear.",
   },
   {
     n: "02",
     Icon: Share2,
-    title: "Share it anywhere",
-    body: "A story, a bio, a group chat, the bottom of an email. Anyone who has the link can write to you. They never make an account.",
+    title: "Share it",
+    body: "A bio, a story, a group chat, the bottom of an email. Anyone who opens it can write to you.",
   },
   {
     n: "03",
     Icon: PenLine,
-    title: "Keep every one",
-    body: "Messages land in your vault. Favourite the ones that catch you off guard, tuck the rest away, and find any of them again in a search.",
+    title: "Keep them",
+    body: "Everything lands in your vault. Favourite the ones you'll reread, archive the rest, search all of them.",
   },
 ];
 
@@ -28,7 +28,7 @@ export function HowItWorks() {
         <div className="max-w-2xl">
           <p className="label text-ember">How it works</p>
           <h2 className="mt-4 font-display text-[2.25rem] leading-[1.08] tracking-tightest text-ink sm:text-5xl">
-            Three steps, and then you stop thinking about it.
+            Set it up once.
           </h2>
         </div>
 

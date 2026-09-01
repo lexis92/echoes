@@ -14,12 +14,12 @@ export default async function TrashPage({
     <MessageBoard
       view="trash"
       basePath="/trash"
-      eyebrow="Thirty days to change your mind"
+      eyebrow="30 days to change your mind"
       title="Trash"
-      description="Deleted messages wait here for 30 days before they go for good. Put any of them back."
+      description="Deleted messages wait here for 30 days before they go for good. You can put any of them back."
       emptyIcon={<Trash2 />}
       emptyTitle="Trash is empty"
-      emptyDescription="Nothing waiting to be forgotten. Messages you delete land here first, so an accidental tap is never final."
+      emptyDescription="Nothing in here. Deleted messages land in Trash first, so a mistap is never final."
       searchParams={params}
     />
   );

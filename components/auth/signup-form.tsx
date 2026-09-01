@@ -46,8 +46,8 @@ export function SignUpForm() {
     <>
       <FormHeading
         eyebrow="Create your vault"
-        title="Start keeping the good ones"
-        description="Two minutes to set up. Then share one link and let people write to you."
+        title="Create your vault"
+        description="Two minutes to set up. Then share your link and see what comes back."
       />
 
       <form action={formAction} className="space-y-5" onInput={onFirstInput}>
@@ -69,7 +69,7 @@ export function SignUpForm() {
           label="Your name"
           htmlFor="name"
           error={state.fields?.name}
-          hint="This is what senders see at the top of your page."
+          hint="Senders see this at the top of your page."
         >
           <Input
             name="name"
@@ -141,8 +141,8 @@ export function SignUpForm() {
         </Button>
 
         <p className="text-center text-xs leading-relaxed text-faint">
-          By creating an account you agree that messages sent to you are yours to
-          keep, and that you will not use Echoes to harass anyone.
+          By creating an account you agree that messages sent to you are yours
+          to keep, and that you won't use Echoes to harass anyone.
         </p>
       </form>
 

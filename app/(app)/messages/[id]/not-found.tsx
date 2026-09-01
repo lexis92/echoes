@@ -7,15 +7,15 @@ export default function MessageNotFound() {
   return (
     <EmptyState
       icon={<Lock />}
-      title="Not available"
-      description="This message either is not in your vault, or it is sealed until a future date. Sealed messages stay unreadable until the moment they open."
+      title="Can’t open this"
+      description="This message either isn't in your vault, or it's locked until a future date."
       action={
         <div className="flex flex-wrap justify-center gap-2">
           <Button asChild>
             <Link href="/inbox">Back to inbox</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/scheduled">See what is sealed</Link>
+            <Link href="/scheduled">See what's locked</Link>
           </Button>
         </div>
       }

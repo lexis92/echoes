@@ -3,23 +3,23 @@ import { EyeOff, Fingerprint, ShieldCheck, Trash2 } from "lucide-react";
 const PROMISES = [
   {
     Icon: EyeOff,
-    title: "Nobody browses your vault",
-    body: "Your messages are readable by exactly one account: yours. Row-level security enforces it in the database itself, not just in the app.",
+    title: "Only you can read them",
+    body: "Your messages are locked to your account in the database itself, not just in the app. There is no admin view.",
   },
   {
     Icon: Fingerprint,
     title: "Senders stay anonymous",
-    body: "We never store a sender's IP address. We keep a salted hash so we can stop a flood of spam, and that hash cannot be turned back into an address.",
+    body: "We never store a sender's IP address. We keep a scrambled version to block spam floods, and it cannot be turned back.",
   },
   {
     Icon: ShieldCheck,
-    title: "Sealed means sealed",
-    body: "A message scheduled for the future is withheld by the database until its moment. Not hidden by CSS — genuinely not sent to your browser.",
+    title: "Locked means locked",
+    body: "A message set to open later never reaches your browser until the date arrives. It is held back by the database, not hidden by the page.",
   },
   {
     Icon: Trash2,
     title: "Leaving is easy",
-    body: "Delete your account whenever you like and every message, photo and recording goes with it. No retention period, no dark pattern.",
+    body: "Delete your account and every message, photo and recording goes with it. No waiting period, no retention copy.",
   },
 ];
 
@@ -31,11 +31,11 @@ export function Privacy() {
           <div className="lg:sticky lg:top-28 lg:self-start">
             <p className="label text-ember">Privacy first</p>
             <h2 className="mt-4 font-display text-[2.25rem] leading-[1.08] tracking-tightest text-ink sm:text-5xl">
-              People will tell you things they have not told anyone.
+              Private by default.
             </h2>
             <p className="mt-5 text-pretty text-[1.0625rem] leading-relaxed text-quiet">
-              That only works if the vault is genuinely private. Here is exactly
-              what we do about it.
+              People say things here they have not said out loud. That only works
+              if the vault is private, so here is how we handle it.
             </p>
           </div>
 

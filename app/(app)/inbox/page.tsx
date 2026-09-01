@@ -18,14 +18,14 @@ export default async function InboxPage({
       basePath="/inbox"
       eyebrow="Your vault"
       title="Inbox"
-      description="Everything anyone has sent you, newest first."
+      description="Everything people have sent you, newest first."
       showFolders
       emptyIcon={<Inbox />}
-      emptyTitle="Nothing here yet"
-      emptyDescription="Your vault fills up the moment someone opens your link. Share it somewhere people will see it — a story, a bio, a group chat."
+      emptyTitle="No messages yet"
+      emptyDescription="Nothing arrives until someone has your link. Put it somewhere people will actually see it: a bio, a story, a group chat."
       emptyAction={
         <Button asChild>
-          <Link href="/dashboard">Get my link</Link>
+          <Link href="/dashboard">Get your link</Link>
         </Button>
       }
       searchParams={params}

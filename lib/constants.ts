@@ -1,9 +1,9 @@
 /** Product-wide constants. Keep limits in one place — API, UI and DB agree. */
 
 export const APP_NAME = "Echoes";
-export const APP_TAGLINE = "Every kind word, kept.";
+export const APP_TAGLINE = "Keep what people tell you.";
 export const APP_DESCRIPTION =
-  "Echoes is a personal message vault. Share one link and anyone — no account needed — can leave you a message you keep forever.";
+  "Share one link and anyone can write to you. No account needed on their end. Every message is yours to keep.";
 
 export const MESSAGE_MIN_LENGTH = 2;
 export const MESSAGE_MAX_LENGTH = 5000;

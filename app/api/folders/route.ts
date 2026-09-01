@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     .eq("owner_id", user.id);
 
   if ((count ?? 0) >= 30) {
-    return fail(400, "too_many_folders", "Thirty collections is plenty — tidy up first?");
+    return fail(400, "too_many_folders", "Thirty collections is the limit. Tidy up first?");
   }
 
   const { data, error } = await supabase

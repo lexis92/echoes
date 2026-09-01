@@ -188,7 +188,7 @@ export function MessageDetail({
                 <time dateTime={message.created_at} title={fullDate(message.created_at)}>
                   {timeAgo(message.created_at)}
                 </time>
-                {message.unlock_at && " · was sealed"}
+                {message.unlock_at && " · was locked"}
               </p>
             </div>
           </div>
@@ -210,7 +210,7 @@ export function MessageDetail({
               )}
             >
               <Heart className={cn("size-4", favorite && "fill-current")} />
-              {favorite ? "Favourite" : "Keep close"}
+              {favorite ? "Favourited" : "Favourite"}
             </button>
           )}
         </header>
@@ -226,7 +226,7 @@ export function MessageDetail({
               onClick={() => setShowRaw(true)}
               className="mt-5 text-sm text-ember underline-offset-4 hover:underline"
             >
-              Show the words exactly as they were written
+              Show the original wording
             </button>
           )}
 
@@ -257,7 +257,7 @@ export function MessageDetail({
                 <div className="flex flex-wrap items-center gap-3">
                   <Button variant="outline" size="sm" onClick={summarise} loading={summarising}>
                     <Sparkles className="size-4" />
-                    Sum this up for me
+                    Summarise this
                   </Button>
                   <p className="text-xs text-faint">
                     Sends this message to OpenAI once, only when you ask.
@@ -338,15 +338,15 @@ export function MessageDetail({
         <div className="mt-4 rounded-xl bg-danger-soft p-4 text-sm leading-relaxed text-danger">
           <p className="font-medium">This message was held for review.</p>
           <p className="mt-1">
-            Our spam checks flagged it
+            Our spam checks flagged this
             {message.spam_reasons.length > 0 && (
               <>
                 {" "}
                 (<span className="font-mono text-xs">{message.spam_reasons.join(", ")}</span>)
               </>
             )}
-            . It is shown to you and nobody else. Report it if it should not have
-            arrived at all.
+            . Only you can see it. Report it if it shouldn&rsquo;t have arrived
+            at all.
           </p>
         </div>
       )}
@@ -407,7 +407,7 @@ function ReportDialog({
       });
       if (!res.ok) throw new Error("That report could not be filed.");
       toast.success("Reported and archived", {
-        description: "It is out of your inbox. We will look at it.",
+        description: "It's out of your inbox. We'll take a look.",
       });
       onOpenChange(false);
       router.push("/inbox");
@@ -425,8 +425,8 @@ function ReportDialog({
         <DialogHeader>
           <DialogTitle>Report this message</DialogTitle>
           <DialogDescription>
-            Reporting archives it straight away, so you do not have to see it
-            again while we look.
+            Reporting archives it straight away, so you don&rsquo;t have to see
+            it again while we look.
           </DialogDescription>
         </DialogHeader>
 
@@ -471,7 +471,7 @@ function ReportDialog({
           </div>
 
           <Badge tone="neutral">
-            We never tell the sender that you reported them.
+            The sender is never told.
           </Badge>
         </DialogBody>
 

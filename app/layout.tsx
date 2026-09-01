@@ -11,7 +11,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(absoluteUrl("/")),
   title: {
-    default: `${APP_NAME} — ${APP_TAGLINE}`,
+    default: `${APP_NAME}: ${APP_TAGLINE}`,
     template: `%s · ${APP_NAME}`,
   },
   description: APP_DESCRIPTION,
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: APP_NAME,
-    title: `${APP_NAME} — ${APP_TAGLINE}`,
+    title: `${APP_NAME}: ${APP_TAGLINE}`,
     description: APP_DESCRIPTION,
     url: absoluteUrl("/"),
   },
   twitter: {
     card: "summary_large_image",
-    title: `${APP_NAME} — ${APP_TAGLINE}`,
+    title: `${APP_NAME}: ${APP_TAGLINE}`,
     description: APP_DESCRIPTION,
   },
   robots: { index: true, follow: true },

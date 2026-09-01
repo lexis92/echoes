@@ -17,10 +17,10 @@ export function FinalCTA({ signedIn }: { signedIn: boolean }) {
         </div>
 
         <h2 className="mx-auto max-w-2xl text-balance font-display text-[2.25rem] leading-[1.06] tracking-tightest text-ink sm:text-5xl lg:text-[3.5rem]">
-          Somebody has been meaning to tell you something.
+          Somebody has something to tell you.
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-pretty text-[1.0625rem] leading-relaxed text-quiet">
-          Give them somewhere to put it.
+          Two minutes to set up. Free to use.
         </p>
 
         <div className="mx-auto mt-10 max-w-lg">

@@ -44,14 +44,14 @@ export default async function SentPage({
         <SentCelebration sealed={Boolean(validSeal)} />
 
         <h1 className="mt-9 font-display text-[2.25rem] leading-[1.06] tracking-tightest text-ink sm:text-[2.75rem]">
-          {validSeal ? "Sealed and delivered." : "It is on its way."}
+          {validSeal ? "Locked and delivered." : "Sent."}
         </h1>
 
         <p className="mx-auto mt-4 max-w-md text-pretty text-[1.0625rem] leading-relaxed text-quiet">
           {validSeal ? (
             <>
-              {firstName} knows something is waiting, but will not be able to read
-              a word of it until{" "}
+              {firstName} knows something is waiting, but can&rsquo;t read it
+              until{" "}
               <strong className="font-medium text-ink">
                 {format(validSeal, "EEEE d MMMM yyyy")}
               </strong>
@@ -59,9 +59,9 @@ export default async function SentPage({
             </>
           ) : (
             <>
-              {firstName} has it. It is in their vault now — and it stays there
-              for as long as they want to keep it.
-              {from ? ` They will see it came from ${from}.` : " You sent it anonymously."}
+              {firstName} has it. It&rsquo;s in their vault now, for as long as
+              they want to keep it.
+              {from ? ` They&rsquo;ll see it came from ${from}.` : " You sent it anonymously."}
             </>
           )}
         </p>
@@ -71,14 +71,14 @@ export default async function SentPage({
             <Link href={`/u/${profile.username}`}>Write another</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
-            <Link href="/signup">Get a link of my own</Link>
+            <Link href="/signup">Get my own link</Link>
           </Button>
         </div>
 
         <p className="mt-10 max-w-sm text-pretty text-xs leading-relaxed text-faint">
-          There is no copy of this in your browser and no account tied to it. If
-          you want to say something else, you will need to write it again — so
-          make it count.
+          There&rsquo;s no copy of this in your browser and no account tied to
+          it. If you want to say something else, you&rsquo;ll need to write it
+          again.
         </p>
       </main>
     </div>

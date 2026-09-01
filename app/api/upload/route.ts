@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
     return fail(
       413,
       "file_too_large",
-      `That file is too big — keep it under ${Math.round(maxBytes / 1024 / 1024)} MB.`
+      `That file is too big. Keep it under ${Math.round(maxBytes / 1024 / 1024)} MB.`
     );
   }
 

@@ -52,7 +52,7 @@ export default async function DashboardPage() {
               {stats.counts.unread === 1 ? "message is" : "messages are"} waiting.
             </>
           ) : stats.counts.total > 0 ? (
-            <>Everything is read, {firstName}.</>
+            <>You&rsquo;re all caught up, {firstName}.</>
           ) : (
             <>Your vault is ready, {firstName}.</>
           )}
@@ -88,7 +88,7 @@ export default async function DashboardPage() {
           <EmptyState
             icon={<Inbox />}
             title="No messages yet"
-            description="This is the quiet part. Share your link and it will not stay quiet for long — most people get their first message within a day."
+            description="Share your link and this fills up fast. Most people get their first message within a day."
           />
         ) : (
           <MessageList

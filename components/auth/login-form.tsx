@@ -13,8 +13,8 @@ import { Field } from "@/components/ui/label";
 import { FormAlert, FormHeading } from "./form-shell";
 
 const LINK_ERRORS: Record<string, string> = {
-  link_expired: "That link has expired. Sign in and we will send a fresh one.",
-  invalid_link: "That link was not readable. Try signing in instead.",
+  link_expired: "That link expired. Sign in and we\u2019ll send a new one.",
+  invalid_link: "We couldn\u2019t read that link. Try signing in instead.",
   missing_code: "That link was incomplete. Try signing in instead.",
 };
 
@@ -31,7 +31,7 @@ export function LoginForm() {
       <FormHeading
         eyebrow="Welcome back"
         title="Open your vault"
-        description="Everything anyone has ever sent you is still here."
+        description="Everything people have sent you is still here."
       />
 
       <form action={formAction} className="space-y-5">

@@ -73,7 +73,7 @@ export function MarketingNav({ signedIn }: { signedIn: boolean }) {
                 <Link href="/login">Sign in</Link>
               </Button>
               <Button asChild size="sm">
-                <Link href="/signup">Get my link</Link>
+                <Link href="/signup">Get your link</Link>
               </Button>
             </>
           )}

@@ -125,8 +125,8 @@ export function UsernameField({
           : status.state === "taken"
             ? status.reason
             : status.state === "available"
-              ? "Yours. Nobody else can take it."
-              : "Letters, numbers and underscores. This is the link you will share."}
+              ? "Available."
+              : "Letters, numbers and underscores. This is the link you'll share."}
       </p>
     </div>
   );

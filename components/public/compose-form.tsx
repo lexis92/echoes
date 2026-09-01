@@ -32,10 +32,10 @@ import { cn } from "@/lib/cn";
 type Attachment = { path: string; previewUrl?: string; name: string; size: number };
 
 const PROMPTS = [
-  "Something you have never said out loud",
+  "Something you've never said out loud",
   "A moment you still think about",
   "Thank them for something small",
-  "What you would say if you had one minute",
+  "What you'd say with one minute",
 ];
 
 export function ComposeForm({ profile }: { profile: PublicProfile }) {
@@ -94,7 +94,7 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
 
   async function onPickImage(file: File) {
     if (file.size > IMAGE_MAX_BYTES) {
-      toast.error(`That photo is ${formatBytes(file.size)} — keep it under 8 MB.`);
+      toast.error(`That photo is ${formatBytes(file.size)}. Keep it under 8 MB.`);
       return;
     }
     setUploadingImage(true);
@@ -145,7 +145,7 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
       return;
     }
     if (turnstileConfigured && !captchaToken) {
-      setError("Just finishing a quick spam check — try again in a second.");
+      setError("Finishing a quick spam check. Try again in a second.");
       return;
     }
 
@@ -228,7 +228,7 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
           rows={6}
           required
           aria-invalid={fieldError.content ? true : undefined}
-          placeholder={`Say what you have been meaning to say…`}
+          placeholder="Say the thing you've been meaning to say…"
           className="min-h-[11rem] resize-none font-display text-[1.0625rem] leading-relaxed"
         />
         <div className="flex items-center justify-between gap-3">
@@ -310,11 +310,11 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
             <Lock className="mt-0.5 size-4 shrink-0 text-dusk" aria-hidden />
             <div className="min-w-0 flex-1">
               <label htmlFor="unlock" className="block text-sm font-medium text-ink">
-                Seal this until
+                Open it on
               </label>
               <p className="mt-0.5 text-xs leading-relaxed text-quiet">
-                {profile.name} will know something is waiting, but will not be
-                able to read a word of it until this moment.
+                {profile.name} will know something is waiting, but won&rsquo;t be
+                able to read it until then.
               </p>
               <input
                 id="unlock"
@@ -416,7 +416,7 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
           htmlFor="senderEmail"
           optional
           error={fieldError.senderEmail}
-          hint="Only shared with them, only if you want a reply."
+          hint="Shared only with them, and only if you want a reply."
         >
           <Input
             name="senderEmail"
@@ -434,12 +434,12 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
 
       <Button type="submit" size="lg" className="w-full" loading={busy}>
         <Send className="size-4" />
-        {unlockAt ? "Seal and send" : `Send to ${profile.name.split(" ")[0]}`}
+        {unlockAt ? "Schedule it" : `Send to ${profile.name.split(" ")[0]}`}
       </Button>
 
       <p className="text-center text-xs leading-relaxed text-faint">
-        Your message goes straight into {profile.name.split(" ")[0]}&rsquo;s private
-        vault. We never publish it, and we do not store your IP address.
+        This goes straight into {profile.name.split(" ")[0]}&rsquo;s private vault.
+        We never publish it, and we don&rsquo;t store your IP address.
       </p>
     </form>
   );

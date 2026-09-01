@@ -20,21 +20,21 @@ export function DashboardNudges({
       href: "/setup?edit=1",
       Icon: Camera,
       title: "Add a photo",
-      body: "People are far more likely to write when they can see who they are writing to.",
+      body: "People write more when they can see who they're writing to.",
     },
     {
       done: Boolean(profile.bio?.trim()),
       href: "/setup?edit=1",
       Icon: PenLine,
       title: "Write a line about yourself",
-      body: "One sentence is plenty. It sets the tone for what people send.",
+      body: "One sentence is plenty. It sets the tone for what you get.",
     },
     {
       done: totalMessages > 0,
       href: "#share",
       Icon: Send,
       title: "Share your link",
-      body: "Nothing arrives until somebody has it. A story or a group chat is the usual first move.",
+      body: "Nothing arrives until someone has it. A story or a group chat is the usual first move.",
     },
   ];
 

@@ -37,14 +37,14 @@ export function ShareCard({
     try {
       await navigator.share({
         title: `Write to ${name} on Echoes`,
-        text: `Leave me a message — no account needed.`,
+        text: "Leave me a message. You don't need an account.",
         url,
       });
       track(ANALYTICS_EVENTS.profileLinkShared, { method: "web_share" });
     } catch (error) {
       // AbortError just means they closed the sheet.
       if ((error as Error)?.name !== "AbortError") {
-        toast.error("Sharing did not open. Copy the link instead.");
+        toast.error("Couldn't open the share sheet. Copy the link instead.");
       }
     }
   }
@@ -90,10 +90,10 @@ export function ShareCard({
       <div className="relative">
         <p className="label text-ember">Your link</p>
         <h2 className="mt-3 font-display text-2xl tracking-tightest text-ink">
-          Share it and wait.
+          Your link
         </h2>
         <p className="mt-2 max-w-md text-[15px] leading-relaxed text-quiet">
-          Anyone who opens this can write to you. They will never be asked to
+          Anyone who opens this can write to you. They won&rsquo;t be asked to
           make an account.
         </p>
 
@@ -112,7 +112,7 @@ export function ShareCard({
           )}
           <Button asChild variant="ghost" size="sm">
             <a href={url} target="_blank" rel="noreferrer">
-              Preview my page
+              See my page
             </a>
           </Button>
         </div>

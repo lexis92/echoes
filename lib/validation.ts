@@ -18,16 +18,16 @@ export const usernameSchema = z
   .max(USERNAME_MAX_LENGTH, `At most ${USERNAME_MAX_LENGTH} characters.`)
   .regex(
     /^[a-z0-9](?:[a-z0-9_]{1,22}[a-z0-9])$/,
-    "Letters, numbers and underscores. Must start and end with a letter or number."
+    "Letters, numbers and underscores, starting and ending with a letter or number."
   )
-  .refine((v) => !RESERVED_USERNAMES.has(v), "That one is reserved — try another.");
+  .refine((v) => !RESERVED_USERNAMES.has(v), "That one is reserved. Try another.");
 
 export const emailSchema = z
   .string()
   .trim()
   .toLowerCase()
   .min(1, "Enter your email address.")
-  .email("That does not look like an email address.");
+  .email("That doesn't look like an email address.");
 
 export const passwordSchema = z
   .string()
@@ -76,7 +76,7 @@ export const submitMessageSchema = z.object({
   content: z
     .string()
     .trim()
-    .min(MESSAGE_MIN_LENGTH, "Say a little more.")
+    .min(MESSAGE_MIN_LENGTH, "Say a bit more.")
     .max(MESSAGE_MAX_LENGTH, `Keep it under ${MESSAGE_MAX_LENGTH.toLocaleString()} characters.`),
   senderName: z
     .string()
@@ -88,7 +88,7 @@ export const submitMessageSchema = z.object({
     .string()
     .trim()
     .toLowerCase()
-    .email("That does not look like an email address.")
+    .email("That doesn't look like an email address.")
     .optional()
     .or(z.literal("")),
   imagePath: z.string().max(400).optional().or(z.literal("")),
@@ -101,11 +101,11 @@ export const submitMessageSchema = z.object({
     .or(z.literal(""))
     .refine(
       (v) => !v || new Date(v).getTime() > Date.now(),
-      "Choose a moment in the future."
+      "Pick a date in the future."
     )
     .refine(
       (v) => !v || new Date(v).getTime() < Date.now() + 20 * 365 * 24 * 3600_000,
-      "That is further out than we can promise to keep — 20 years is the limit."
+      "20 years is the furthest out you can go."
     ),
   /** Cloudflare Turnstile token. */
   captchaToken: z.string().max(4096).optional().or(z.literal("")),

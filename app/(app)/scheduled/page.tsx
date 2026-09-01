@@ -8,7 +8,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
 import { pluralize } from "@/lib/utils";
 
-export const metadata: Metadata = { title: "Sealed", robots: { index: false } };
+export const metadata: Metadata = { title: "Locked", robots: { index: false } };
 
 export default async function ScheduledPage() {
   const sealed = await getSealedMessages();
@@ -16,11 +16,11 @@ export default async function ScheduledPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Waiting for their moment"
-        title="Sealed"
+        eyebrow="Not open yet"
+        title="Locked"
         description={
           sealed.length
-            ? `${pluralize(sealed.length, "message")} waiting. We will email you the moment each one opens.`
+            ? `${pluralize(sealed.length, "message")} waiting. We'll email you when each one opens.`
             : undefined
         }
       />
@@ -28,11 +28,11 @@ export default async function ScheduledPage() {
       {sealed.length === 0 ? (
         <EmptyState
           icon={<Lock />}
-          title="Nothing sealed yet"
-          description="Anyone writing to you can choose a date for their message to open — a birthday, a first day, an anniversary. Until then it stays genuinely unreadable."
+          title="Nothing locked yet"
+          description="Senders can pick a date for their message to open: a birthday, a first day, an anniversary. Until then nobody can read it, including you."
           action={
             <Button asChild variant="outline">
-              <Link href="/dashboard">Share my link</Link>
+              <Link href="/dashboard">Share your link</Link>
             </Button>
           }
         />

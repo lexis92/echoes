@@ -46,11 +46,11 @@ export function PublicProfileHeader({ profile }: { profile: PublicProfile }) {
 
       <p className="mt-6 font-mono text-xs text-faint">
         {profile.message_count > 0
-          ? `${pluralize(profile.message_count, "message")} kept · on Echoes since ${format(
+          ? `${pluralize(profile.message_count, "message")} kept · here since ${format(
               new Date(profile.member_since),
               "MMMM yyyy"
             )}`
-          : `On Echoes since ${format(new Date(profile.member_since), "MMMM yyyy")}`}
+          : `Here since ${format(new Date(profile.member_since), "MMMM yyyy")}`}
       </p>
     </header>
   );

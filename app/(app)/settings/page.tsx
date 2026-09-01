@@ -32,7 +32,7 @@ export default async function SettingsPage() {
       <PageHeader
         eyebrow="Your account"
         title="Settings"
-        description="How your page behaves, what reaches your inbox, and what leaves it."
+        description="How your page works and what reaches your inbox."
       />
 
       <SettingsSection
@@ -65,7 +65,7 @@ export default async function SettingsPage() {
       <SettingsSection
         id="receiving"
         title="Receiving messages"
-        description="Every switch here changes what senders see on your page, immediately."
+        description="These change what senders see on your page straight away."
       >
         <ReceivingPanel profile={profile} />
       </SettingsSection>
@@ -73,7 +73,7 @@ export default async function SettingsPage() {
       <SettingsSection
         id="safety"
         title="Safety and privacy"
-        description="Echoes always rate-limits senders and screens for spam. These are the parts you control."
+        description="Echoes always screens for spam and limits how fast anyone can send. These are the parts you control."
       >
         <SafetyPanel profile={profile} />
       </SettingsSection>
@@ -81,7 +81,7 @@ export default async function SettingsPage() {
       <SettingsSection
         id="notifications"
         title="Notifications"
-        description="Sealed messages are always announced when they arrive and again when they open."
+        description="Locked messages are announced when they arrive and again when they open."
       >
         <NotificationsPanel profile={profile} />
       </SettingsSection>
@@ -89,7 +89,7 @@ export default async function SettingsPage() {
       <SettingsSection
         id="collections"
         title="Collections"
-        description="Optional shelves for your messages. Deleting a collection never deletes what is in it."
+        description="Optional shelves for your messages. Deleting one never deletes the messages inside."
       >
         <FoldersPanel folders={folders} />
       </SettingsSection>
@@ -101,7 +101,7 @@ export default async function SettingsPage() {
       <SettingsSection
         id="danger"
         title="Danger zone"
-        description="The irreversible one."
+        description="No undo on this one."
       >
         <DangerPanel username={profile.username} />
       </SettingsSection>

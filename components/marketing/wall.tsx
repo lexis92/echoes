@@ -49,9 +49,9 @@ export function Wall() {
       className="relative overflow-hidden border-t border-ink/[0.07] py-20 sm:py-24"
     >
       <div className="container mb-12">
-        <p className="label text-ember">The shape of it</p>
+        <p className="label text-ember">For example</p>
         <h2 className="mt-4 max-w-xl font-display text-[2rem] leading-[1.1] tracking-tightest text-ink sm:text-[2.5rem]">
-          This is the sort of thing that arrives.
+          What people write.
         </h2>
       </div>
 
@@ -68,8 +68,7 @@ export function Wall() {
       </div>
 
       <p className="container mt-10 text-xs text-faint">
-        Illustrative examples. Real messages are never shown to anyone but their
-        recipient.
+        Examples, not real messages. We never show anyone's vault to anyone else.
       </p>
     </section>
   );

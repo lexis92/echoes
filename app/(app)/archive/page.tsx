@@ -20,7 +20,7 @@ export default async function ArchivePage({
       showFolders
       emptyIcon={<Archive />}
       emptyTitle="Archive is empty"
-      emptyDescription="Archiving tidies a message out of the inbox without losing it. Everything you archive stays searchable forever."
+      emptyDescription="Archiving clears a message out of your inbox without deleting it. Anything here stays searchable."
       searchParams={params}
     />
   );

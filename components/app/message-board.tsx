@@ -87,11 +87,11 @@ export async function MessageBoard({
         isFiltered ? (
           <EmptyState
             icon={emptyIcon}
-            title="Nothing matches that"
+            title="No matches"
             description={
               search
-                ? `No message contains “${search}”. Try a different word, or clear the filters.`
-                : "No message matches those filters. Try clearing one."
+                ? `Nothing contains “${search}”. Try a different word or clear the filters.`
+                : "Nothing matches those filters. Try clearing one."
             }
           />
         ) : (

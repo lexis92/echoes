@@ -25,13 +25,13 @@ export default function GlobalError({
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[50vh] ember-bloom" aria-hidden />
       <div className="relative w-full max-w-md">
         <Logo className="mx-auto mb-12" />
-        <p className="label text-ember">Something broke</p>
+        <p className="label text-ember">Error</p>
         <h1 className="mt-4 font-display text-4xl tracking-tightest text-ink">
-          The ink smudged
+          Something went wrong
         </h1>
         <p className="mt-4 text-pretty leading-relaxed text-quiet">
-          An unexpected error stopped this page from loading. Your messages are
-          safe — this is a display problem, not a storage one.
+          This page didn&rsquo;t load. Your messages are safe. It&rsquo;s a
+          display problem, not a storage one.
         </p>
         {error.digest && (
           <p className="mt-5 font-mono text-xs text-faint">Reference: {error.digest}</p>

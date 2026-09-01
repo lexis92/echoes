@@ -23,7 +23,7 @@ export function AvatarPicker({
 
   async function upload(file: File) {
     if (file.size > AVATAR_MAX_BYTES) {
-      toast.error(`That photo is ${formatBytes(file.size)} — keep it under 3 MB.`);
+      toast.error(`That photo is ${formatBytes(file.size)}. Keep it under 3 MB.`);
       return;
     }
 
@@ -103,7 +103,7 @@ export function AvatarPicker({
         </div>
         <p className="text-xs leading-relaxed text-faint">
           JPG, PNG, WebP or HEIC, up to 3 MB. People write more when they can
-          see who they are writing to.
+          see who they&rsquo;re writing to.
         </p>
       </div>
     </div>

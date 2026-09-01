@@ -1,27 +1,27 @@
 const QUESTIONS = [
   {
     q: "Does the person writing to me need an account?",
-    a: "No. They open your link, type, and send. That is the whole flow — no email address, no password, no app. It is the single most important thing about Echoes.",
+    a: "No. They open your link, type, and send. No email, no password, no app. That is the whole point.",
   },
   {
     q: "Can I see who sent an anonymous message?",
-    a: "No, and neither can we in any useful way. Senders choose whether to leave a name. We store a salted hash of the sender's IP purely to stop spam floods; it is not reversible and it is never shown to you.",
+    a: "No, and neither can we. Senders choose whether to sign. We store a scrambled version of their IP to block spam floods, which cannot be reversed and is never shown to you.",
   },
   {
     q: "What stops people being horrible?",
-    a: "A CAPTCHA, per-sender and per-recipient rate limits, and a transparent spam score that holds suspicious messages for review rather than dropping them. You can pause new messages at any time, require senders to leave a name, and report anything that gets through.",
+    a: "Spam checks, a CAPTCHA, and limits on how fast anyone can send. Suspicious messages are held for you to review rather than deleted. You can also pause new messages, require a name, or report anything that gets through.",
   },
   {
-    q: "How does a sealed message work?",
-    a: "The sender picks a date. Until that moment the message is withheld by the database — your browser never receives the text, so there is nothing to peek at. You can see that something is waiting, and when it opens.",
+    q: "How do messages that open later work?",
+    a: "The sender picks a date. Until then the text never reaches your browser, so there is nothing to peek at. You can see that something is waiting and when it opens.",
   },
   {
-    q: "Is it really forever?",
-    a: "Messages have no expiry. Deleting one puts it in Trash for thirty days first, because deleting something irreplaceable should be undoable. Delete your account and everything goes, immediately and completely.",
+    q: "Do messages expire?",
+    a: "Never. Deleting one puts it in Trash for 30 days first, in case you change your mind. Delete your account and everything goes at once.",
   },
   {
     q: "What does it cost?",
-    a: "Creating a vault, receiving messages and keeping them is free. If we ever add paid features they will be conveniences on top — never a paywall in front of messages you already have.",
+    a: "Nothing. Creating a vault, receiving messages and keeping them are all free. If we ever charge for anything, it will not be for messages you already have.",
   },
 ];
 
@@ -33,7 +33,7 @@ export function FAQ() {
           <div className="lg:sticky lg:top-28 lg:self-start">
             <p className="label text-ember">Questions</p>
             <h2 className="mt-4 font-display text-[2.25rem] leading-[1.08] tracking-tightest text-ink sm:text-[2.75rem]">
-              The things people ask first.
+              Common questions.
             </h2>
           </div>
 

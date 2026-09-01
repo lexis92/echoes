@@ -11,7 +11,7 @@ export function StatTiles({ counts, last30Days }: { counts: InboxCounts; last30D
     { href: "/inbox", label: "Kept", value: counts.total, Icon: Inbox, accent: "text-ink" },
     { href: "/inbox?unread=1", label: "Unread", value: counts.unread, Icon: Sparkles, accent: "text-ember" },
     { href: "/favorites", label: "Favourites", value: counts.favorites, Icon: Heart, accent: "text-ink" },
-    { href: "/scheduled", label: "Sealed", value: counts.scheduled, Icon: Lock, accent: "text-dusk" },
+    { href: "/scheduled", label: "Locked", value: counts.scheduled, Icon: Lock, accent: "text-dusk" },
     { href: "/archive", label: "Archived", value: counts.archived, Icon: Archive, accent: "text-ink" },
   ];
 

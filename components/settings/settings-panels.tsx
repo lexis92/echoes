@@ -60,7 +60,7 @@ export function ReceivingPanel({ profile }: { profile: ProfileRow }) {
       <SwitchRow
         id="accepting"
         title="Accept new messages"
-        description="Turn this off and your page politely tells visitors you have paused. Nothing already in your vault is affected."
+        description="Turn this off and your page tells visitors you've paused. Nothing already in your vault changes."
         checked={values.accepting_messages}
         onCheckedChange={(v) => set({ accepting_messages: v })}
       />
@@ -74,21 +74,21 @@ export function ReceivingPanel({ profile }: { profile: ProfileRow }) {
       <SwitchRow
         id="allow-voice"
         title="Allow voice notes"
-        description="Senders can record up to two minutes in the browser."
+        description="Senders can record up to two minutes in their browser."
         checked={values.allow_voice}
         onCheckedChange={(v) => set({ allow_voice: v })}
       />
       <SwitchRow
         id="allow-scheduled"
-        title="Allow sealed messages"
-        description="Senders can choose a future date for a message to open."
+        title="Allow scheduled messages"
+        description="Senders can pick a date for a message to open."
         checked={values.allow_scheduled}
         onCheckedChange={(v) => set({ allow_scheduled: v })}
       />
       <SwitchRow
         id="require-name"
         title="Require a name"
-        description="Anonymous messages are often the most honest ones — but if you would rather know who is writing, turn this on."
+        description="Anonymous messages are often the most honest. Turn this on if you'd rather know who's writing."
         checked={values.require_sender_name}
         onCheckedChange={(v) => set({ require_sender_name: v })}
       />
@@ -103,8 +103,8 @@ export function SafetyPanel({ profile }: { profile: ProfileRow }) {
     <div className="divide-y divide-ink/[0.07]">
       <SwitchRow
         id="profanity"
-        title="Soften strong language in previews"
-        description="Masks swearing in list views. The full wording is always one tap away — we never hide what someone actually wrote."
+        title="Hide strong language in previews"
+        description="Hides swearing in list views. The full wording is always one tap away. We never change what someone wrote."
         checked={values.profanity_filter}
         onCheckedChange={(v) => set({ profanity_filter: v })}
       />
@@ -112,13 +112,13 @@ export function SafetyPanel({ profile }: { profile: ProfileRow }) {
       <div className="py-4">
         <p className="text-[15px] font-medium text-ink">Who can find your page</p>
         <p className="mt-0.5 text-sm leading-relaxed text-quiet">
-          Either way, your messages stay private. This only affects search engines.
+          Your messages stay private either way. This only affects search engines.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {(
             [
-              { value: "public", label: "Anyone with the link", hint: "Still never indexed" },
-              { value: "unlisted", label: "Link only", hint: "Hidden from your public count" },
+              { value: "public", label: "Anyone with the link", hint: "Never indexed" },
+              { value: "unlisted", label: "Link only", hint: "Hides your message count" },
             ] as const
           ).map((option) => (
             <button
@@ -143,10 +143,10 @@ export function SafetyPanel({ profile }: { profile: ProfileRow }) {
 }
 
 const DIGEST_LABELS: Record<string, { title: string; hint: string }> = {
-  instant: { title: "Straight away", hint: "An email for each message as it lands." },
+  instant: { title: "Straight away", hint: "One email per message." },
   daily: { title: "Once a day", hint: "One summary each morning." },
   weekly: { title: "Once a week", hint: "One summary every Monday." },
-  off: { title: "Never", hint: "No emails. Check the vault when you feel like it." },
+  off: { title: "Never", hint: "No emails. Check whenever you like." },
 };
 
 export function NotificationsPanel({ profile }: { profile: ProfileRow }) {
@@ -157,7 +157,7 @@ export function NotificationsPanel({ profile }: { profile: ProfileRow }) {
       <SwitchRow
         id="notify"
         title="Email me about new messages"
-        description="We only ever email you about your own vault."
+        description="We only email you about your own vault."
         checked={values.notify_email}
         onCheckedChange={(v) => set({ notify_email: v })}
       />
@@ -325,9 +325,9 @@ export function DangerPanel({ username }: { username: string }) {
         <div className="max-w-md">
           <p className="text-[15px] font-medium text-ink">Delete your account</p>
           <p className="mt-1 text-sm leading-relaxed text-quiet">
-            Every message, photo and recording anyone has ever sent you is
-            removed immediately and cannot be recovered. Your username becomes
-            available to somebody else.
+            Every message, photo and recording is removed immediately and
+            can&rsquo;t be recovered. Your username becomes available to someone
+            else.
           </p>
         </div>
         <Button variant="danger" onClick={() => setOpen(true)}>
@@ -339,16 +339,16 @@ export function DangerPanel({ username }: { username: string }) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete your vault for good?</DialogTitle>
+            <DialogTitle>Delete your vault?</DialogTitle>
             <DialogDescription>
-              This cannot be undone. There is no grace period and no backup we
-              can restore from.
+              This can&rsquo;t be undone. There&rsquo;s no grace period and no
+              backup to restore from.
             </DialogDescription>
           </DialogHeader>
 
           <DialogBody className="space-y-4">
             <Badge tone="danger">
-              Consider downloading anything you want to keep first.
+              Save anything you want to keep first.
             </Badge>
             <div className="space-y-1.5">
               <label htmlFor="confirm-username" className="block text-sm font-medium text-ink">
@@ -389,7 +389,7 @@ export function PasswordPanel() {
       <div className="max-w-md">
         <p className="text-[15px] font-medium text-ink">Password</p>
         <p className="mt-1 text-sm leading-relaxed text-quiet">
-          We send a one-time link rather than asking for your current password.
+          We send a one-time link instead of asking for your current password.
         </p>
       </div>
       <Button asChild variant="outline">

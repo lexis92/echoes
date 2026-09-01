@@ -37,7 +37,7 @@ export async function completeSetupAction(
   if (!parsed.success) {
     return {
       status: "error",
-      message: "Almost — check the highlighted fields.",
+      message: "Almost. Check the highlighted fields.",
       fields: fieldErrors(parsed.error),
     };
   }
@@ -67,14 +67,14 @@ export async function completeSetupAction(
       return {
         status: "error",
         message: "Someone claimed that username a moment ago.",
-        fields: { username: "Taken — try another." },
+        fields: { username: "Taken. Try another." },
       };
     }
     if (error.message.includes("username_reserved")) {
       return {
         status: "error",
         message: "That username is reserved.",
-        fields: { username: "Reserved — try another." },
+        fields: { username: "Reserved. Try another." },
       };
     }
     console.error("[setup] profile update failed", error);

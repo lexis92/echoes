@@ -41,10 +41,10 @@ export function SealedCard({ message, index = 0 }: { message: SealedMessage; ind
           </span>
           <div>
             <p className="text-sm font-medium text-ink">
-              {message.from_someone ? "A message with a name on it" : "An anonymous message"}
+              {message.from_someone ? "A signed message" : "An anonymous message"}
             </p>
             <p className="font-mono text-[11px] text-faint">
-              Sealed <time dateTime={message.created_at}>{format(new Date(message.created_at), "d MMM yyyy")}</time>
+              Written <time dateTime={message.created_at}>{format(new Date(message.created_at), "d MMM yyyy")}</time>
             </p>
           </div>
         </div>
@@ -60,8 +60,7 @@ export function SealedCard({ message, index = 0 }: { message: SealedMessage; ind
       </div>
 
       <p className="relative mt-4 text-[15px] italic leading-relaxed text-quiet">
-        Whatever this says is not readable yet — not by you, and not by anyone
-        looking at your screen.
+        Nobody can read this yet, including you.
       </p>
 
       {(message.has_image || message.has_voice) && (
@@ -69,13 +68,13 @@ export function SealedCard({ message, index = 0 }: { message: SealedMessage; ind
           {message.has_image && (
             <Badge tone="dusk">
               <ImageIcon />
-              Includes a photo
+              Has a photo
             </Badge>
           )}
           {message.has_voice && (
             <Badge tone="dusk">
               <MicVocal />
-              Includes a voice note
+              Has a voice note
             </Badge>
           )}
         </div>

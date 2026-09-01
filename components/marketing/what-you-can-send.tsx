@@ -4,31 +4,31 @@ const THINGS = [
   {
     Icon: Type,
     title: "Words",
-    body: "The whole point. Up to five thousand characters — enough for the long one you have been meaning to write.",
+    body: "Up to 5,000 characters. Enough for the long one someone has been putting off.",
     span: "sm:col-span-2",
   },
   {
     Icon: UserRound,
-    title: "A name — or not",
-    body: "Sign it, or stay anonymous. Some of the most affecting messages people receive have no name on them at all.",
+    title: "A name, or not",
+    body: "Signing is optional. A lot of people leave it blank, and those are often the ones that land hardest.",
     span: "",
   },
   {
     Icon: Mic,
     title: "Your voice",
-    body: "Record up to two minutes right in the page. Hearing someone say it is a different thing entirely.",
+    body: "Two minutes, recorded right in the page. Hearing someone say it is different from reading it.",
     span: "",
   },
   {
     Icon: ImageIcon,
     title: "A photo",
-    body: "The picture from that day, the recipe card, the ticket stub you kept.",
+    body: "The picture from that day. The recipe card. The ticket stub someone kept.",
     span: "",
   },
   {
     Icon: CalendarClock,
     title: "A date to open it",
-    body: "Seal a message until a birthday, a graduation, a first day. It stays unreadable — even to us in the interface — until the moment arrives.",
+    body: "Lock a message until a birthday or a first day. Nobody can read it before then, including you.",
     span: "sm:col-span-2",
   },
 ];
@@ -40,11 +40,11 @@ export function WhatYouCanSend() {
         <div className="max-w-2xl">
           <p className="label text-ember">What people can send</p>
           <h2 className="mt-4 font-display text-[2.25rem] leading-[1.08] tracking-tightest text-ink sm:text-5xl">
-            More than a text box.
+            Not just text.
           </h2>
           <p className="mt-5 text-pretty text-[1.0625rem] leading-relaxed text-quiet">
-            You decide which of these your page accepts. Turn any of them off in
-            settings and the option disappears for senders too.
+            You choose which of these your page accepts. Turn one off and it
+            disappears for senders too.
           </p>
         </div>
 

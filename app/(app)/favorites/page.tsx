@@ -21,7 +21,7 @@ export default async function FavoritesPage({
       description="The ones you come back to."
       emptyIcon={<Heart />}
       emptyTitle="No favourites yet"
-      emptyDescription="Tap the heart on any message and it lands here — a short list for the days you need one."
+      emptyDescription="Tap the heart on any message and it shows up here. Handy on the days you need one."
       emptyAction={
         <Button asChild variant="outline">
           <Link href="/inbox">Go to inbox</Link>

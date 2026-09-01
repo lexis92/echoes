@@ -25,7 +25,7 @@ function shell(body: string) {
       </td></tr>
       <tr><td style="padding:16px 28px 28px;">${body}</td></tr>
       <tr><td style="padding:18px 28px;border-top:1px solid rgba(25,21,18,0.07);background:#FBF6EE;font-size:12px;color:${FAINT};line-height:1.6;">
-        You are getting this because you have an Echoes vault.
+        You&rsquo;re getting this because you have an Echoes vault.
         <a href="${absoluteUrl("/settings")}" style="color:${EMBER};text-decoration:underline;">Change what we email you</a>.
       </td></tr>
     </table>
@@ -49,13 +49,13 @@ export function newMessageEmail(args: {
   const url = absoluteUrl(`/messages/${args.messageId}`);
 
   return {
-    subject: `${args.senderName ?? "Someone"} left you a message`,
-    text: `${from} left you a message on Echoes.\n\n"${args.content}"\n\nRead it: ${url}`,
+    subject: `${args.senderName ?? "Someone"} wrote to you`,
+    text: `${from} wrote to you on Echoes.\n\n"${args.content}"\n\nRead it: ${url}`,
     html: shell(
       `<h1 style="margin:0 0 6px;font-size:25px;font-weight:600;letter-spacing:-0.02em;">A new message</h1>
        <p style="margin:0 0 20px;color:${QUIET};line-height:1.6;">From <strong>${from}</strong></p>
        <blockquote style="margin:0 0 26px;padding:16px 18px;background:#FBF6EE;border-left:3px solid ${EMBER};border-radius:0 12px 12px 0;line-height:1.7;font-style:italic;">${preview}${truncated}</blockquote>
-       ${button(url, "Read the whole thing")}`
+       ${button(url, "Read it")}`
     ),
   };
 }
@@ -73,12 +73,12 @@ export function sealedMessageEmail(args: {
   const from = args.senderName ? escapeHtml(args.senderName) : "Someone";
 
   return {
-    subject: `${args.senderName ?? "Someone"} sealed a message for you`,
-    text: `${from} left you a message sealed until ${when}. We will let you know the moment it opens.\n\n${absoluteUrl("/scheduled")}`,
+    subject: `${args.senderName ?? "Someone"} scheduled a message for you`,
+    text: `${from} wrote to you, set to open on ${when}. We'll email you when it does.\n\n${absoluteUrl("/scheduled")}`,
     html: shell(
-      `<h1 style="margin:0 0 6px;font-size:25px;font-weight:600;letter-spacing:-0.02em;">Something is waiting for you</h1>
-       <p style="margin:0 0 22px;color:${QUIET};line-height:1.7;"><strong>${from}</strong> left you a message sealed until <strong>${when}</strong>. We will not show you a word of it before then — and we will email you the moment it opens.</p>
-       ${button(absoluteUrl("/scheduled"), "See what is sealed")}`
+      `<h1 style="margin:0 0 6px;font-size:25px;font-weight:600;letter-spacing:-0.02em;">Something is waiting</h1>
+       <p style="margin:0 0 22px;color:${QUIET};line-height:1.7;"><strong>${from}</strong> wrote to you. It opens on <strong>${when}</strong>, and not a moment before. We&rsquo;ll email you when it does.</p>
+       ${button(absoluteUrl("/scheduled"), "See what's waiting")}`
     ),
   };
 }
@@ -87,10 +87,10 @@ export function welcomeEmail(args: { name: string; username: string }) {
   const link = absoluteUrl(`/u/${args.username}`);
   return {
     subject: "Your Echoes link is ready",
-    text: `Welcome to Echoes, ${args.name}.\n\nYour link: ${link}\n\nShare it anywhere. Anyone can leave you a message — no account needed — and it is yours to keep forever.`,
+    text: `Welcome to Echoes, ${args.name}.\n\nYour link: ${link}\n\nShare it anywhere. Anyone can write to you without an account, and what they send is yours to keep.`,
     html: shell(
       `<h1 style="margin:0 0 6px;font-size:25px;font-weight:600;letter-spacing:-0.02em;">Welcome, ${escapeHtml(args.name)}</h1>
-       <p style="margin:0 0 18px;color:${QUIET};line-height:1.7;">Your vault is open. This is your link — share it anywhere, and anyone can leave you a message without making an account.</p>
+       <p style="margin:0 0 18px;color:${QUIET};line-height:1.7;">Your vault is open. Share this link anywhere. Anyone who opens it can write to you without making an account.</p>
        <p style="margin:0 0 26px;padding:14px 16px;background:#FBF6EE;border-radius:12px;font-family:ui-monospace,SFMono-Regular,monospace;font-size:14px;word-break:break-all;">${link}</p>
        ${button(absoluteUrl("/dashboard"), "Open your vault")}`
     ),

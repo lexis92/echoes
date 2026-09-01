@@ -38,7 +38,7 @@ export function CopyField({
       try {
         document.execCommand("copy");
       } catch {
-        toast.error("Couldn't copy — select the link and copy manually.");
+        toast.error("Couldn't copy. Select the link and copy it manually.");
         document.body.removeChild(el);
         return;
       }
@@ -46,7 +46,7 @@ export function CopyField({
     }
     setCopied(true);
     onCopied?.();
-    toast.success("Link copied", { description: "Now share it with someone." });
+    toast.success("Link copied", { description: "Now send it to someone." });
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setCopied(false), 2200);
   }

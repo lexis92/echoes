@@ -37,12 +37,12 @@ export async function generateMetadata({
     title: `Write to ${profile.name}`,
     description:
       profile.welcome_note ??
-      `Leave ${profile.name} a message on Echoes. No account needed — they keep it forever.`,
+      `Write to ${profile.name} on Echoes. No account needed, and they keep it forever.`,
     // A share link belongs to the people it is given to, not to search engines.
     robots: { index: false, follow: false },
     openGraph: {
       title: `Write to ${profile.name}`,
-      description: profile.welcome_note ?? `Leave ${profile.name} a message. No account needed.`,
+      description: profile.welcome_note ?? `Write to ${profile.name}. No account needed.`,
       images: profile.avatar_url ? [{ url: profile.avatar_url }] : undefined,
     },
   };
@@ -79,7 +79,7 @@ export default async function PublicProfilePage({
             <EmptyState
               icon={<PauseCircle />}
               title="Messages are paused"
-              description={`${profile.name} has turned off new messages for now. Come back another time — the link will keep working.`}
+              description={`${profile.name} has turned off new messages for now. The link will keep working, so try again another time.`}
               className="border-0 bg-transparent py-8"
             />
           )}
@@ -87,7 +87,7 @@ export default async function PublicProfilePage({
 
         <footer className="mt-12 text-center">
           <p className="text-sm text-quiet">
-            Want a link like this?{" "}
+            Want one of these?{" "}
             <Link
               href="/"
               className="font-medium text-ember underline-offset-4 hover:underline"
@@ -101,7 +101,7 @@ export default async function PublicProfilePage({
             published anywhere.
           </p>
           <Button asChild variant="ghost" size="sm" className="mt-4">
-            <Link href="/signup">Start my own vault</Link>
+            <Link href="/signup">Create my own</Link>
           </Button>
         </footer>
       </main>

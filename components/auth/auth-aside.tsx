@@ -13,7 +13,7 @@ const NOTES = [
   },
   {
     body: "Open this on the morning of your exhibition. I wrote it months in advance because I already know how it is going to go.",
-    from: "Sealed until 14 March",
+    from: "Opens 14 March",
     tilt: "-1.1deg",
   },
 ];
@@ -52,8 +52,8 @@ export function AuthAside() {
       </div>
 
       <p className="relative max-w-sm text-pretty text-sm leading-relaxed text-quiet">
-        One link. Anyone can write to you without an account. Everything they
-        send is yours to keep, forever.
+        One link. Anyone can write to you without an account, and everything
+        they send is yours to keep.
       </p>
     </aside>
   );

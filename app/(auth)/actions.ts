@@ -151,7 +151,7 @@ export async function resendVerificationAction(
       status: "error",
       message:
         error.status === 429
-          ? "We just sent one — give it a minute before asking again."
+          ? "We just sent one. Give it a minute before asking again."
           : error.message,
     };
   }

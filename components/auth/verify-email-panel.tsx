@@ -43,13 +43,13 @@ export function VerifyEmailPanel() {
 
       <FormHeading
         eyebrow="One more step"
-        title="Check your inbox"
+        title="Check your email"
         description={
           emailParam ? (
             <>
               We sent a confirmation link to{" "}
-              <strong className="font-medium text-ink">{emailParam}</strong>. Open it
-              and your vault is ready.
+              <strong className="font-medium text-ink">{emailParam}</strong>. Open
+              it and your vault is ready.
             </>
           ) : (
             "We sent you a confirmation link. Open it and your vault is ready."
@@ -59,15 +59,15 @@ export function VerifyEmailPanel() {
 
       {expired && (
         <FormAlert tone="error" className="mb-5">
-          That link had expired. Send yourself a new one below.
+          That link expired. Send yourself a new one below.
         </FormAlert>
       )}
 
       <div className="rounded-xl border border-ink/[0.08] bg-raised p-5">
         <p className="text-sm font-medium text-ink">Nothing arrived?</p>
         <p className="mt-1 text-sm leading-relaxed text-quiet">
-          Check spam and promotions first — it comes from a new address, so it
-          sometimes lands there.
+          Check spam and promotions. It comes from a new address, so it often
+          lands there first.
         </p>
 
         <form action={formAction} className="mt-4 space-y-3">
@@ -94,7 +94,7 @@ export function VerifyEmailPanel() {
             disabled={cooldown > 0}
           >
             <RefreshCw className="size-4" />
-            {cooldown > 0 ? `Send again in ${cooldown}s` : "Send the link again"}
+            {cooldown > 0 ? `Send again in ${cooldown}s` : "Send it again"}
           </Button>
         </form>
       </div>

@@ -96,10 +96,10 @@ export function SetupFlow({ profile }: { profile: ProfileRow }) {
           <div className="space-y-6 animate-fade-up">
             <div>
               <h1 className="font-display text-[2rem] leading-[1.1] tracking-tightest text-ink">
-                {isEditing ? "Your profile" : "First, the basics"}
+                {isEditing ? "Your profile" : "The basics"}
               </h1>
               <p className="mt-2 text-[15px] leading-relaxed text-quiet">
-                Your name is what senders see. Your link is how they reach you.
+                Senders see your name. Your link is how they reach you.
               </p>
             </div>
 
@@ -128,10 +128,10 @@ export function SetupFlow({ profile }: { profile: ProfileRow }) {
           <div className="space-y-6 animate-fade-up">
             <div>
               <h1 className="font-display text-[2rem] leading-[1.1] tracking-tightest text-ink">
-                Put a face to it
+                Add a photo
               </h1>
               <p className="mt-2 text-[15px] leading-relaxed text-quiet">
-                Optional, and you can change it whenever you like.
+                Optional. You can change it any time.
               </p>
             </div>
             <AvatarPicker name={name} value={avatarUrl} onChange={setAvatarUrl} />
@@ -142,7 +142,7 @@ export function SetupFlow({ profile }: { profile: ProfileRow }) {
           <div className="space-y-6 animate-fade-up">
             <div>
               <h1 className="font-display text-[2rem] leading-[1.1] tracking-tightest text-ink">
-                What should people know?
+                About you
               </h1>
               <p className="mt-2 text-[15px] leading-relaxed text-quiet">
                 Both of these show on your public page. Both are optional.
@@ -170,7 +170,7 @@ export function SetupFlow({ profile }: { profile: ProfileRow }) {
               label="A prompt for senders"
               htmlFor="welcome_note"
               optional
-              hint="The single best way to get messages worth keeping. Ask for something specific."
+              hint="Ask for something specific. It makes a real difference to what you get."
             >
               <Input
                 name="welcome_note"
@@ -221,7 +221,7 @@ export function SetupFlow({ profile }: { profile: ProfileRow }) {
             onClick={() => setStep(STEPS.length - 1)}
             className="mx-auto block text-sm text-faint underline-offset-4 hover:text-quiet hover:underline"
           >
-            Skip the extras
+            Skip for now
           </button>
         )}
       </form>
@@ -250,12 +250,12 @@ function SetupDone({ username, editing }: { username: string; editing: boolean }
       </div>
 
       <h1 className="font-display text-[2.25rem] leading-[1.08] tracking-tightest text-ink">
-        {editing ? "Saved." : "Your vault is open."}
+        {editing ? "Saved" : "You're all set"}
       </h1>
       <p className="mx-auto mt-3 max-w-sm text-pretty text-[15px] leading-relaxed text-quiet">
         {editing
           ? "Taking you back to settings."
-          : "This is your link. Everything starts the moment somebody has it."}
+          : "This is your link. Send it to someone and see what comes back."}
       </p>
 
       {!editing && (
@@ -272,7 +272,7 @@ function SetupDone({ username, editing }: { username: string; editing: boolean }
             </Button>
             <Button asChild size="lg" variant="outline">
               <a href={profileUrl(username)} target="_blank" rel="noreferrer">
-                See what senders see
+                See my page
               </a>
             </Button>
           </div>

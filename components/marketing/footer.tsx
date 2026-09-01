@@ -13,8 +13,7 @@ export function MarketingFooter() {
               <span className="font-display text-lg tracking-tightest text-ink">Echoes</span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-quiet">
-              A personal message vault. Share one link, keep every message
-              forever.
+              Share one link. Keep every message people send you.
             </p>
           </div>
 
@@ -39,7 +38,7 @@ export function MarketingFooter() {
         </div>
 
         <div className="mt-10 flex flex-col-reverse items-start gap-4 border-t border-ink/[0.07] pt-6 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Echoes. Built for the things people mean to say.</p>
+          <p>© {new Date().getFullYear()} Echoes</p>
           <ThemeToggle />
         </div>
       </div>

@@ -14,7 +14,7 @@ export type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   { href: "/inbox", label: "Inbox", shortLabel: "Inbox", Icon: Inbox, countKey: "inbox", primary: true },
   { href: "/favorites", label: "Favourites", shortLabel: "Loved", Icon: Heart, countKey: "favorites", primary: true },
-  { href: "/scheduled", label: "Sealed", shortLabel: "Sealed", Icon: Lock, countKey: "scheduled", primary: true },
+  { href: "/scheduled", label: "Locked", shortLabel: "Locked", Icon: Lock, countKey: "scheduled", primary: true },
   { href: "/archive", label: "Archive", shortLabel: "Archive", Icon: Archive, countKey: "archived" },
   { href: "/trash", label: "Trash", shortLabel: "Trash", Icon: Trash2, countKey: "trash" },
   { href: "/settings", label: "Settings", shortLabel: "Settings", Icon: Settings },

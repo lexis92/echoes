@@ -31,11 +31,11 @@ export default function NotFound() {
 
         <p className="label text-ember">Error 404</p>
         <h1 className="mt-4 font-display text-4xl tracking-tightest text-ink sm:text-5xl">
-          This page never arrived
+          This page doesn’t exist
         </h1>
         <p className="mx-auto mt-4 max-w-md text-pretty leading-relaxed text-quiet">
-          The link might be mistyped, or the profile behind it may have been
-          closed. Nothing in anyone&rsquo;s vault has been lost.
+          The link may be mistyped, or the profile behind it may have closed.
+          Nothing in anyone&rsquo;s vault is lost.
         </p>
 
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">

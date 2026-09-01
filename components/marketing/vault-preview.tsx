@@ -11,11 +11,11 @@ export function VaultPreview() {
         <div className="mx-auto max-w-2xl text-center">
           <p className="label text-ember">Your vault</p>
           <h2 className="mt-4 font-display text-[2.25rem] leading-[1.08] tracking-tightest text-ink sm:text-5xl">
-            A quiet place to keep them.
+            Everything in one place.
           </h2>
           <p className="mt-5 text-pretty text-[1.0625rem] leading-relaxed text-quiet">
-            Not a feed. Not a notification tower. Somewhere you go on purpose,
-            once in a while, when you need to remember something true.
+            Search it, favourite the best ones, and come back to them in five
+            years. Nothing expires.
           </p>
         </div>
 
@@ -34,12 +34,12 @@ export function VaultPreview() {
               <nav className="hidden border-r border-ink/[0.07] bg-raised/60 p-4 sm:block" aria-hidden>
                 <div className="mb-4 flex items-center gap-2 rounded-lg bg-ink/[0.05] px-3 py-2 text-xs text-faint">
                   <Search className="size-3.5" />
-                  Search everything
+                  Search messages
                 </div>
                 {[
                   { Icon: Inbox, label: "Inbox", count: "12", active: true },
                   { Icon: Star, label: "Favourites", count: "4" },
-                  { Icon: Lock, label: "Sealed", count: "2" },
+                  { Icon: Lock, label: "Locked", count: "2" },
                   { Icon: Archive, label: "Archive", count: "31" },
                 ].map(({ Icon, label, count, active }) => (
                   <div
@@ -73,7 +73,7 @@ export function VaultPreview() {
                     unread: true,
                   },
                   {
-                    from: "Sealed until 14 March",
+                    from: "Opens 14 March",
                     time: "5d",
                     body: null,
                   },
@@ -101,7 +101,7 @@ export function VaultPreview() {
                     ) : (
                       <p className="mt-2 flex items-center gap-2 text-sm italic text-dusk">
                         <Lock className="size-3.5" aria-hidden />
-                        Sealed. Opens in 38 days.
+                        Locked. Opens in 38 days.
                       </p>
                     )}
                   </article>

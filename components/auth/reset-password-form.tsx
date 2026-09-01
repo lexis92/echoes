@@ -20,8 +20,8 @@ export function ResetPasswordForm() {
     <>
       <FormHeading
         eyebrow="Password reset"
-        title="Let's get you back in"
-        description="Enter the email you signed up with and we will send you a link to set a new password."
+        title="Reset your password"
+        description="Enter the email you signed up with. We'll send a link to set a new one."
       />
 
       <form action={formAction} className="space-y-5">
@@ -44,7 +44,7 @@ export function ResetPasswordForm() {
         </Field>
 
         <Button type="submit" size="lg" className="w-full" loading={pending}>
-          Send the reset link
+          Send the link
         </Button>
       </form>
 

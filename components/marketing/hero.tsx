@@ -46,7 +46,7 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
               className="label inline-flex items-center gap-2 rounded-full bg-ember-soft px-3 py-1.5 text-ember-ink"
             >
               <Sparkles className="size-3" aria-hidden />
-              No account needed to write to you
+              Senders don't need an account
             </motion.p>
 
             <motion.h1
@@ -55,10 +55,10 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
               transition={{ duration: 0.7, delay: 0.05 }}
               className="mt-6 font-display text-[2.75rem] leading-[1.02] tracking-tightest text-ink sm:text-6xl lg:text-[4.25rem]"
             >
-              Every kind word
+              People have things
               <br />
               <span className="relative inline-block">
-                <span className="relative z-10">someone ever</span>
+                <span className="relative z-10">they want</span>
                 <svg
                   viewBox="0 0 300 12"
                   preserveAspectRatio="none"
@@ -75,7 +75,7 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
                 </svg>
               </span>
               <br />
-              meant to tell you.
+              to tell you.
             </motion.h1>
 
             <motion.p
@@ -84,10 +84,9 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="mt-6 max-w-lg text-pretty text-[1.0625rem] leading-relaxed text-quiet"
             >
-              Echoes gives you one link. Share it anywhere and anyone —
-              friends, family, people you have never met — can leave you a
-              message. No sign-up, no app, no awkwardness. Every message is
-              yours, kept forever, in a vault only you can open.
+              Share one link. Anyone who opens it can write to you, without
+              making an account or installing anything. What they send is yours
+              to keep.
             </motion.p>
 
             <motion.div
@@ -120,11 +119,11 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
               </li>
               <li className="flex items-center gap-1.5">
                 <Lock className="size-3.5" aria-hidden />
-                Sealed until a date you choose
+                Messages that open later
               </li>
               <li className="flex items-center gap-1.5">
                 <span className="size-1.5 rounded-full bg-sage" aria-hidden />
-                Free to start
+                Free
               </li>
             </motion.ul>
           </div>

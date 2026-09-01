@@ -42,7 +42,7 @@ export function useMessageActions(onLocalChange?: (id: string, patch: Patch) => 
         });
         if (!res.ok) {
           const data = await res.json().catch(() => null);
-          throw new Error(data?.message ?? "That change did not save.");
+          throw new Error(data?.message ?? "That change didn't save.");
         }
         if (!options?.silent) router.refresh();
         return true;
@@ -63,7 +63,7 @@ export function useMessageActions(onLocalChange?: (id: string, patch: Patch) => 
       const okay = await patch(message.id, { is_favorite: next });
       if (okay) {
         track(ANALYTICS_EVENTS.messageFavorited, { on: next });
-        toast.success(next ? "Kept in Favourites" : "Removed from Favourites");
+        toast.success(next ? "Added to Favourites" : "Removed from Favourites");
       }
     },
     [patch]
@@ -75,7 +75,7 @@ export function useMessageActions(onLocalChange?: (id: string, patch: Patch) => 
       const okay = await patch(message.id, { is_archived: next });
       if (okay) {
         track(ANALYTICS_EVENTS.messageArchived, { on: next });
-        toast.success(next ? "Moved to Archive" : "Back in your inbox", {
+        toast.success(next ? "Archived" : "Back in your inbox", {
           action: {
             label: "Undo",
             onClick: () => patch(message.id, { is_archived: !next }),
@@ -102,16 +102,16 @@ export function useMessageActions(onLocalChange?: (id: string, patch: Patch) => 
       mark(id, true);
       try {
         const res = await fetch(`/api/messages/${id}`, { method: "DELETE" });
-        if (!res.ok) throw new Error("That message could not be deleted.");
+        if (!res.ok) throw new Error("Couldn't delete that message.");
         track(ANALYTICS_EVENTS.messageDeleted, { permanent: false });
         toast.success("Moved to Trash", {
-          description: "It stays there for 30 days.",
+          description: "You have 30 days to change your mind.",
           action: {
             label: "Undo",
             onClick: async () => {
               await patch(id, { restore: true }, { silent: true });
               track(ANALYTICS_EVENTS.messageRestored, {});
-              toast.success("Put back");
+              toast.success("Restored");
               router.refresh();
             },
           },
@@ -133,7 +133,7 @@ export function useMessageActions(onLocalChange?: (id: string, patch: Patch) => 
       const okay = await patch(id, { restore: true });
       if (okay) {
         track(ANALYTICS_EVENTS.messageRestored, {});
-        toast.success("Put back in your inbox");
+        toast.success("Back in your inbox");
       }
     },
     [patch]
@@ -147,7 +147,7 @@ export function useMessageActions(onLocalChange?: (id: string, patch: Patch) => 
         const res = await fetch(`/api/messages/${id}?permanent=1`, { method: "DELETE" });
         if (!res.ok) throw new Error("That message could not be deleted.");
         track(ANALYTICS_EVENTS.messageDeleted, { permanent: true });
-        toast.success("Deleted for good");
+        toast.success("Deleted");
         router.refresh();
         return true;
       } catch (error) {
