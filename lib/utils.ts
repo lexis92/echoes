@@ -59,13 +59,45 @@ export function hashIndex(input: string, buckets: number) {
   return Math.abs(h) % buckets;
 }
 
+/**
+ * The origin every absolute link is built from.
+ *
+ * Deliberately defensive. `??` is not enough here: an environment variable that
+ * is *defined but empty* — which is what an unset `NEXT_PUBLIC_*` can inline to
+ * at build time, and what an empty box in a hosting dashboard produces — passes
+ * a null-check and then yields a relative "/" that throws `ERR_INVALID_URL`
+ * inside `new URL()`. That failure surfaces during `next build` as an opaque
+ * "Failed to collect configuration", so it is worth handling properly.
+ *
+ * Each candidate is trimmed, given a scheme if it lacks one, and parsed before
+ * being accepted; anything unusable is skipped rather than propagated.
+ */
+function resolveSiteOrigin(): string {
+  const candidates = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    // Set on every Vercel build, including previews, where the production
+    // domain does not exist yet.
+    process.env.VERCEL_URL,
+  ];
+
+  for (const candidate of candidates) {
+    const value = candidate?.trim();
+    if (!value) continue;
+    const withScheme = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+    try {
+      return new URL(withScheme).origin;
+    } catch {
+      // Malformed value — try the next candidate rather than failing the build.
+    }
+  }
+
+  return "http://localhost:3000";
+}
+
 export function absoluteUrl(path = "") {
-  const base =
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000");
-  return `${base.replace(/\/$/, "")}${path.startsWith("/") ? path : `/${path}`}`;
+  const origin = resolveSiteOrigin();
+  return `${origin}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 export function profileUrl(username: string) {
