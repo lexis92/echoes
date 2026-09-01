@@ -13,7 +13,9 @@ export type SendArgs = {
 
 export async function sendEmail(args: SendArgs): Promise<string | null> {
   const apiKey = Deno.env.get("RESEND_API_KEY");
-  const from = Deno.env.get("EMAIL_FROM") ?? "Echoes <hello@echoes.app>";
+  // onboarding@resend.dev needs no domain setup but only delivers to the address
+  // that owns the Resend account. A blank EMAIL_FROM counts as unset.
+  const from = Deno.env.get("EMAIL_FROM")?.trim() || "Echoes <onboarding@resend.dev>";
 
   if (!apiKey) {
     console.warn("[email] RESEND_API_KEY missing — logging instead of sending", args.subject);
@@ -37,7 +39,23 @@ export async function sendEmail(args: SendArgs): Promise<string | null> {
   });
 
   if (!res.ok) {
-    console.error("[email] send failed", res.status, await res.text());
+    const detail = await res.text();
+    // The two failures that account for almost every broken email setup.
+    if (/domain is not verified|not verified/i.test(detail)) {
+      console.error(
+        `[email] ${from} is not a verified sender on this Resend account. ` +
+          `Verify the domain at resend.com/domains, or unset EMAIL_FROM to fall ` +
+          `back to onboarding@resend.dev.`,
+      );
+    } else if (/testing emails|own email address/i.test(detail)) {
+      console.error(
+        `[email] Resend refused delivery to ${args.to}. onboarding@resend.dev ` +
+          `only reaches the address that owns the Resend account. Verify a domain ` +
+          `to email anyone else.`,
+      );
+    } else {
+      console.error("[email] send failed", res.status, detail);
+    }
     return null;
   }
   const json = await res.json();

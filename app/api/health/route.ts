@@ -22,9 +22,18 @@ export async function GET() {
     checks.database = "down";
   }
 
+  // Which sender mail actually leaves from, so you can tell a working setup from
+  // one that will silently only reach your own inbox.
+  const from = process.env.EMAIL_FROM?.trim();
+  const email_sender = !process.env.RESEND_API_KEY
+    ? "none"
+    : from
+      ? "custom_domain"
+      : "resend_sandbox";
+
   const healthy = checks.database === "ok";
   return ok(
-    { status: healthy ? "ok" : "degraded", checks, timestamp: new Date().toISOString() },
+    { status: healthy ? "ok" : "degraded", checks, email_sender, timestamp: new Date().toISOString() },
     { status: healthy ? 200 : 503 }
   );
 }
