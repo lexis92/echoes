@@ -230,6 +230,12 @@ Resend under Supabase → Authentication → Emails → SMTP Settings:
 The same free-sender restriction applies here: until a domain is verified, the
 confirmation email only reaches the address that owns the Resend account.
 
+Sign-up failing with **"Error sending confirmation email"** is this setting and
+nothing else. Supabase's built-in sender allows two messages an hour across the
+whole project and refuses any address that is not on the project team, so it
+runs out almost immediately once real people try to sign up. Configuring SMTP
+above is the fix; the app logs the same diagnosis when it happens.
+
 `GET /api/health` reports which of these is live. `email_sender` reads `none`
 with no key, `resend_sandbox` on the shared address, and `custom_domain` once
 `EMAIL_FROM` is set.

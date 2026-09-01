@@ -21,6 +21,43 @@ async function callbackUrl(next?: string) {
   return url.toString();
 }
 
+/**
+ * Supabase reports every mail failure as "Error sending confirmation email",
+ * which tells the person nothing they can act on and looks like their mistake.
+ *
+ * The cause is almost always the built-in email service: it is capped at two
+ * messages an hour for the whole project and refuses any address that is not on
+ * the project team. Custom SMTP is what lifts both limits.
+ *
+ * Returns a message for the screen, and logs the operator-facing detail. Null
+ * when the error is not about sending mail.
+ */
+function describeMailFailure(message: string): string | null {
+  const reason = message.toLowerCase();
+  const isMailFailure =
+    reason.includes("sending confirmation email") ||
+    reason.includes("sending email") ||
+    reason.includes("error sending") ||
+    reason.includes("email address not authorized") ||
+    reason.includes("smtp");
+
+  if (!isMailFailure) return null;
+
+  console.error(
+    `[auth] Supabase could not send the confirmation email: "${message}". ` +
+      `Its built-in sender allows 2 messages an hour across the project and ` +
+      `only delivers to project team members. Configure custom SMTP under ` +
+      `Authentication > Emails > SMTP Settings (smtp.resend.com:465, user ` +
+      `"resend", password = RESEND_API_KEY). Note this is Supabase's own mail, ` +
+      `separate from RESEND_API_KEY in this app, which only covers notifications.`
+  );
+
+  if (reason.includes("not authorized")) {
+    return "We could not send your confirmation email, so sign-up did not finish. The mail service is not set up to reach that address yet.";
+  }
+  return "We could not send your confirmation email, so sign-up did not finish. This is a problem on our end, not something you did. Try again in an hour, or tell the person running this vault.";
+}
+
 export async function signUpAction(
   _prev: AuthState,
   formData: FormData
@@ -51,13 +88,10 @@ export async function signUpAction(
 
   if (error) {
     // Supabase deliberately does not reveal whether an address is registered.
-    return {
-      status: "error",
-      message:
-        error.message.toLowerCase().includes("already")
-          ? "There is already an account with that email. Try signing in."
-          : error.message,
-    };
+    if (error.message.toLowerCase().includes("already")) {
+      return { status: "error", message: "There is already an account with that email. Try signing in." };
+    }
+    return { status: "error", message: describeMailFailure(error.message) ?? error.message };
   }
 
   if (data.user) {
@@ -147,13 +181,10 @@ export async function resendVerificationAction(
   });
 
   if (error) {
-    return {
-      status: "error",
-      message:
-        error.status === 429
-          ? "We just sent one. Give it a minute before asking again."
-          : error.message,
-    };
+    if (error.status === 429) {
+      return { status: "error", message: "We just sent one. Give it a minute before asking again." };
+    }
+    return { status: "error", message: describeMailFailure(error.message) ?? error.message };
   }
 
   return { status: "success", message: "Sent. It should land within a minute." };
