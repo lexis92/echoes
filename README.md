@@ -118,7 +118,7 @@ none of them configured:
 
 | Missing | Effect |
 |---|---|
-| `RESEND_API_KEY` | Emails are logged to the console instead of sent. Messages still save. |
+| `RESEND_API_KEY` | Notification emails are logged to the console instead of sent. Messages still save. Supabase's own auth mail is unaffected. |
 | `NEXT_PUBLIC_POSTHOG_KEY` | Every `track()` is a no-op. |
 | `OPENAI_API_KEY` | The summary button is not rendered; the endpoint returns 503. |
 | `TURNSTILE_SECRET_KEY` | CAPTCHA is skipped, and a warning is logged in production. |
@@ -197,6 +197,42 @@ your deployed address and add `https://<domain>/auth/confirm` as a redirect URL
 (plus `/auth/callback` if you add an OAuth provider later). Skip this and
 everything works except new sign-ups, whose confirmation email would point at
 the wrong host.
+
+### 4. Email
+
+Echoes sends two kinds of mail, and they travel by different routes. Wiring one
+does not wire the other.
+
+**Notifications** (a message arrived, a locked message unlocked, the weekly
+digest) go through Resend, from this codebase. Create a key at
+[resend.com/api-keys](https://resend.com/api-keys) and set `RESEND_API_KEY` in
+Vercel. Leave `EMAIL_FROM` unset and mail goes out from `onboarding@resend.dev`,
+which Resend gives every account with no domain setup. The catch is that it only
+delivers to the address that owns the Resend account. Your own vault works;
+nobody else's does. Verify a domain at
+[resend.com/domains](https://resend.com/domains) and set `EMAIL_FROM` to
+something like `Echoes <hello@yourdomain.com>` to lift that.
+
+**Auth mail** (confirm your address, reset your password) is sent by Supabase,
+not by this code, so a Resend API key does nothing for it. Supabase's built-in
+sender is rate-limited to a couple of messages an hour and is documented as
+being for development only, which is enough to stall real sign-ups. Point it at
+Resend under Supabase → Authentication → Emails → SMTP Settings:
+
+| Field | Value |
+|---|---|
+| Host | `smtp.resend.com` |
+| Port | `465` |
+| Username | `resend` |
+| Password | your Resend API key |
+| Sender email | matches `EMAIL_FROM`, or `onboarding@resend.dev` |
+
+The same free-sender restriction applies here: until a domain is verified, the
+confirmation email only reaches the address that owns the Resend account.
+
+`GET /api/health` reports which of these is live. `email_sender` reads `none`
+with no key, `resend_sandbox` on the shared address, and `custom_domain` once
+`EMAIL_FROM` is set.
 
 Scheduled work can run from either side and both paths are idempotent
 (`notified_at` is the guard): Vercel Cron hitting `/api/cron/deliver`, or
