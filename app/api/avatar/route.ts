@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { fail, ok, serverError, unauthorized } from "@/lib/api";
 import { ACCEPTED_IMAGE_TYPES, AVATAR_MAX_BYTES, BUCKET_AVATARS } from "@/lib/constants";
+import { processImage } from "@/lib/media/process-image";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,12 +41,20 @@ export async function POST(request: NextRequest) {
     return fail(413, "file_too_large", "Keep your photo under 3 MB.");
   }
 
-  const extension = EXTENSIONS[file.type] ?? "jpg";
-  const path = `${user.id}/avatar-${Date.now()}.${extension}`;
+  // Avatars are public, so stripping EXIF matters even more here.
+  const processed = await processImage(await file.arrayBuffer());
+  if (!processed) {
+    return fail(422, "unreadable_image", "We couldn't read that image. Try a JPG or PNG.");
+  }
+
+  const path = `${user.id}/avatar-${Date.now()}.${processed.extension}`;
 
   const { error } = await supabase.storage
     .from(BUCKET_AVATARS)
-    .upload(path, file, { contentType: file.type, upsert: true });
+    .upload(path, processed.buffer, {
+      contentType: processed.contentType,
+      upsert: true,
+    });
 
   if (error) {
     console.error("[avatar] upload failed", error);

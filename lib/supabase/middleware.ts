@@ -18,6 +18,27 @@ const PROTECTED_PREFIXES = [
 const AUTH_ONLY_PREFIXES = ["/login", "/signup", "/reset-password"];
 
 export async function updateSession(request: NextRequest) {
+  // Without these the Supabase client constructor throws, and Vercel reports
+  // the whole thing as an opaque MIDDLEWARE_INVOCATION_FAILED on every route
+  // with no clue as to the cause. Say what is actually missing.
+  const missing = [
+    !process.env.NEXT_PUBLIC_SUPABASE_URL && "NEXT_PUBLIC_SUPABASE_URL",
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY && "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+  ].filter(Boolean);
+
+  if (missing.length) {
+    console.error(
+      `[config] Echoes cannot start: ${missing.join(" and ")} ${
+        missing.length > 1 ? "are" : "is"
+      } not set. Add ${missing.length > 1 ? "them" : "it"} in your hosting provider's environment variables and redeploy.`
+    );
+    return new NextResponse(
+      `Echoes is not configured.\n\nMissing: ${missing.join(", ")}\n\n` +
+        `Add these environment variables and redeploy.`,
+      { status: 503, headers: { "content-type": "text/plain; charset=utf-8" } }
+    );
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient<Database>(

@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { fail, ok, serverError, tooMany } from "@/lib/api";
 import { rateLimit } from "@/lib/security/rate-limit";
 import { clientIp, hashIp } from "@/lib/security/ip";
+import { processImage } from "@/lib/media/process-image";
 import { usernameSchema } from "@/lib/validation";
 import {
   ACCEPTED_AUDIO_TYPES,
@@ -101,17 +102,36 @@ export async function POST(request: NextRequest) {
     return fail(403, "voice_disabled", "This profile is not accepting voice notes.");
   }
 
-  const extension = EXTENSIONS[file.type] ?? "bin";
+  // Photos are re-encoded so no EXIF (and no GPS coordinates) is stored.
+  // Voice notes are passed through: audio containers carry no location data.
+  let body: File | Buffer = file;
+  let contentType = file.type;
+  let extension = EXTENSIONS[file.type] ?? "bin";
+
+  if (kind === "image") {
+    const processed = await processImage(await file.arrayBuffer());
+    if (!processed) {
+      return fail(
+        422,
+        "unreadable_image",
+        "We couldn't read that image. Try a JPG or PNG."
+      );
+    }
+    body = processed.buffer;
+    contentType = processed.contentType;
+    extension = processed.extension;
+  }
+
   const path = `${profile.id}/${crypto.randomUUID()}.${extension}`;
 
   const { error } = await supabase.storage
     .from(BUCKET_MEDIA)
-    .upload(path, file, { contentType: file.type, upsert: false });
+    .upload(path, body, { contentType, upsert: false });
 
   if (error) {
     console.error("[upload] storage write failed", error);
     return serverError("That file could not be uploaded. Try again?");
   }
 
-  return ok({ path, kind, size: file.size, contentType: file.type }, { status: 201 });
+  return ok({ path, kind, contentType }, { status: 201 });
 }

@@ -16,10 +16,19 @@ export const dynamic = "force-dynamic";
 async function loadProfile(username: string): Promise<PublicProfile | null> {
   const supabase = createAdminClient();
   const { data, error } = await supabase.rpc("get_public_profile", { handle: username });
+
   if (error) {
-    console.error("[public profile] lookup failed", error);
-    return null;
+    // Distinct from "no such profile". Returning null here would render a 404
+    // saying the page does not exist, when in fact the database call failed —
+    // which is how a real outage once looked like a typo'd username.
+    console.error("[public profile] lookup failed", {
+      handle: username,
+      code: error.code,
+      message: error.message,
+    });
+    throw new Error(`Could not load this profile: ${error.message}`);
   }
+
   return data?.[0] ?? null;
 }
 
