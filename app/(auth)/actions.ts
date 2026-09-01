@@ -9,13 +9,9 @@ import { absoluteUrl } from "@/lib/utils";
 import { captureServer } from "@/lib/analytics/server";
 import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 
-export type AuthState = {
-  status: "idle" | "error" | "success";
-  message?: string;
-  fields?: Record<string, string>;
-};
-
-export const initialAuthState: AuthState = { status: "idle" };
+// `AuthState` and `initialAuthState` live in ./auth-state — a "use server"
+// file may only export async functions.
+import type { AuthState } from "./auth-state";
 
 /** Where Supabase should send people back to after clicking an email link. */
 async function callbackUrl(next?: string) {

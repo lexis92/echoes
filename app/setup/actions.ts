@@ -8,14 +8,9 @@ import { welcomeEmail } from "@/lib/email/templates";
 import { captureServer } from "@/lib/analytics/server";
 import { ANALYTICS_EVENTS } from "@/lib/analytics/events";
 
-export type SetupState = {
-  status: "idle" | "error" | "success";
-  message?: string;
-  fields?: Record<string, string>;
-  username?: string;
-};
-
-export const initialSetupState: SetupState = { status: "idle" };
+// `SetupState` and `initialSetupState` live in ./setup-state — a "use server"
+// file may only export async functions.
+import type { SetupState } from "./setup-state";
 
 /**
  * Claims the username and marks onboarding complete. Runs for both the first

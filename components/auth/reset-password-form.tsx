@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { requestPasswordResetAction, initialAuthState } from "@/app/(auth)/actions";
+import { requestPasswordResetAction } from "@/app/(auth)/actions";
+import { initialAuthState } from "@/app/(auth)/auth-state";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field } from "@/components/ui/label";
