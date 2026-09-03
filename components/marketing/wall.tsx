@@ -68,7 +68,7 @@ export function Wall() {
       </div>
 
       <p className="container mt-10 text-xs text-faint">
-        Examples, not real messages. We never show anyone's vault to anyone else.
+        Examples, not real messages. We never show anyone’s vault to anyone else.
       </p>
     </section>
   );

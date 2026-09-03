@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { timingSafeEqual } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { fail, ok, serverError } from "@/lib/api";
 import { sendEmail } from "@/lib/email/resend";
@@ -15,11 +16,32 @@ export const maxDuration = 60;
  * are interchangeable, so a deployment can pick whichever scheduler it already
  * runs. Both are idempotent: `notified_at` is the guard.
  */
+/** Compares without leaking the secret's length or a prefix match via timing. */
+function matchesSecret(header: string, expected: string) {
+  const a = Buffer.from(header);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
+}
+
 export async function GET(request: NextRequest) {
   const secret = process.env.CRON_SECRET;
-  const auth = request.headers.get("authorization");
+  const auth = request.headers.get("authorization") ?? "";
 
-  if (secret && auth !== `Bearer ${secret}`) {
+  // Fails closed. This endpoint sends mail to every pending recipient and
+  // purges trash, so an unset secret must not mean "open to anyone" — that
+  // lets a stranger drain the mail quota and replay deliveries at will. The
+  // Supabase edge functions guard themselves the same way.
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      console.error(
+        "[cron] CRON_SECRET is not set, refusing to run. Set it in the hosting " +
+          "environment; Vercel Cron sends it automatically as a bearer token."
+      );
+      return fail(503, "not_configured", "Scheduled delivery is not configured.");
+    }
+    console.warn("[cron] CRON_SECRET is not set — allowed only outside production.");
+  } else if (!matchesSecret(auth, `Bearer ${secret}`)) {
     return fail(401, "unauthorized", "Bad cron credentials.");
   }
 

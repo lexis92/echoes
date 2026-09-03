@@ -46,7 +46,7 @@ export function Hero({ signedIn }: { signedIn: boolean }) {
               className="label inline-flex items-center gap-2 rounded-full bg-ember-soft px-3 py-1.5 text-ember-ink"
             >
               <Sparkles className="size-3" aria-hidden />
-              Senders don't need an account
+              Senders don’t need an account
             </motion.p>
 
             <motion.h1

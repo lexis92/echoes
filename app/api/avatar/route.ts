@@ -8,14 +8,6 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
-const EXTENSIONS: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-  "image/gif": "gif",
-  "image/heic": "heic",
-};
-
 /** POST /api/avatar — the signed-in user replaces their own avatar. */
 export async function POST(request: NextRequest) {
   const supabase = await createClient();

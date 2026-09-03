@@ -123,6 +123,7 @@ none of them configured:
 | `OPENAI_API_KEY` | The summary button is not rendered; the endpoint returns 503. |
 | `TURNSTILE_SECRET_KEY` | CAPTCHA is skipped, and a warning is logged in production. |
 | `IP_HASH_SALT` | Falls back to a development salt — **set this in production.** |
+| `CRON_SECRET` | `/api/cron/deliver` refuses to run in production (503). Scheduled mail stops; nothing else is affected. |
 
 Rate limiting fails *open*: if the limiter itself errors, the message is still
 delivered and the failure is logged. An outage in spam defence must never cost

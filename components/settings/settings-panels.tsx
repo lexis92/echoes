@@ -312,6 +312,9 @@ export function DangerPanel({ username }: { username: string }) {
       const data = await res.json().catch(() => null);
       if (!res.ok) throw new Error(data?.message ?? "That did not work.");
       resetAnalytics();
+      // A hard navigation, not router.push: the account is gone, and a full
+      // load is the only thing that reliably drops cached client state.
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
       window.location.href = "/";
     } catch (error) {
       toast.error((error as Error).message);

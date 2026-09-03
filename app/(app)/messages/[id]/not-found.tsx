@@ -15,7 +15,7 @@ export default function MessageNotFound() {
             <Link href="/inbox">Back to inbox</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/scheduled">See what's locked</Link>
+            <Link href="/scheduled">See what’s locked</Link>
           </Button>
         </div>
       }

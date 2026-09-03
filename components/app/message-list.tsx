@@ -183,29 +183,33 @@ export function MessageList({
   }
 
   const groups = groupByDay(messages);
-  let runningIndex = -1;
+  // Each group's first card continues the numbering from the groups above it.
+  // Derived up front rather than by mutating a counter mid-render, which is not
+  // safe once React is free to re-render parts of a tree independently.
+  const groupOffsets: number[] = [];
+  groups.reduce((offset, group) => {
+    groupOffsets.push(offset);
+    return offset + group.items.length;
+  }, 0);
 
   return (
     <div className="space-y-8">
-      {groups.map((group) => (
+      {groups.map((group, groupIndex) => (
         <section key={group.label} aria-label={group.label}>
           <h2 className="label sticky top-16 z-10 mb-3 w-fit rounded-full bg-paper/90 px-3 py-1.5 text-faint backdrop-blur lg:top-0">
             {group.label}
           </h2>
           <div className="space-y-3">
             <AnimatePresence initial={false} mode="popLayout">
-              {group.items.map((m) => {
-                runningIndex += 1;
-                return (
-                  <MessageCard
-                    key={m.id}
-                    message={m}
-                    folders={folders}
-                    filterProfanity={filterProfanity}
-                    index={runningIndex}
-                  />
-                );
-              })}
+              {group.items.map((m, itemIndex) => (
+                <MessageCard
+                  key={m.id}
+                  message={m}
+                  folders={folders}
+                  filterProfanity={filterProfanity}
+                  index={groupOffsets[groupIndex] + itemIndex}
+                />
+              ))}
             </AnimatePresence>
           </div>
         </section>

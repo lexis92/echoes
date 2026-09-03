@@ -142,7 +142,7 @@ export function SignUpForm() {
 
         <p className="text-center text-xs leading-relaxed text-faint">
           By creating an account you agree that messages sent to you are yours
-          to keep, and that you won't use Echoes to harass anyone.
+          to keep, and that you won’t use Echoes to harass anyone.
         </p>
       </form>
 

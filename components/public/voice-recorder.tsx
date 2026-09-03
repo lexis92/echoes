@@ -54,7 +54,7 @@ export function VoiceRecorder({
   React.useEffect(() => cleanup, [cleanup]);
 
   const stop = React.useCallback(() => {
-    recorderRef.current?.state === "recording" && recorderRef.current.stop();
+    if (recorderRef.current?.state === "recording") recorderRef.current.stop();
   }, []);
 
   async function start() {
@@ -153,7 +153,7 @@ export function VoiceRecorder({
         <Button type="button" variant="ghost" size="icon" onClick={discard} aria-label="Discard recording">
           <Trash2 />
         </Button>
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption -- the user just recorded this */}
+        {/* No caption track: the user recorded this seconds ago and no transcript exists. */}
         <audio
           ref={audioRef}
           src={result.url}

@@ -40,7 +40,13 @@ const PROMPTS = [
 
 export function ComposeForm({ profile }: { profile: PublicProfile }) {
   const router = useRouter();
-  const openedAt = React.useRef(Date.now());
+  // Set on mount, not during render: reading the clock while rendering runs on
+  // the server too, and the number that matters is when this person actually
+  // saw the form. Feeds the elapsed-time bot signal on submit.
+  const openedAt = React.useRef(0);
+  React.useEffect(() => {
+    openedAt.current = Date.now();
+  }, []);
   const startedTyping = React.useRef(false);
 
   const [content, setContent] = React.useState("");
@@ -165,7 +171,11 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
           unlockAt: unlockAt ? new Date(unlockAt).toISOString() : "",
           captchaToken: captchaToken ?? "",
           website,
-          elapsedMs: Date.now() - openedAt.current,
+          // Omitted rather than zeroed when the ref is somehow unset. Zod caps
+          // this at a day, so sending the epoch would reject a real message,
+          // and sending 0 reads as "submitted instantly", which the spam
+          // scorer penalises. Absent means unknown, which is the truth.
+          elapsedMs: openedAt.current ? Date.now() - openedAt.current : undefined,
         }),
       });
 
@@ -192,9 +202,16 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
   const remaining = MESSAGE_MAX_LENGTH - content.length;
   const busy = submitting || uploadingImage || uploadingVoice;
 
-  // Sensible bounds for the seal date: tomorrow, up to twenty years out.
-  const minDate = new Date(Date.now() + 86_400_000).toISOString().slice(0, 16);
-  const maxDate = new Date(Date.now() + 20 * 365 * 86_400_000).toISOString().slice(0, 16);
+  // Bounds for the unlock date: tomorrow, up to twenty years out. Computed
+  // after mount rather than during render because this form is server-rendered
+  // first, and a clock read during render gives the server and the browser two
+  // different strings, which React reports as a hydration mismatch. Until then
+  // the attributes are simply absent; the server revalidates the date anyway.
+  const [dateBounds, setDateBounds] = React.useState<{ min: string; max: string } | null>(null);
+  React.useEffect(() => {
+    const iso = (offsetMs: number) => new Date(Date.now() + offsetMs).toISOString().slice(0, 16);
+    setDateBounds({ min: iso(86_400_000), max: iso(20 * 365 * 86_400_000) });
+  }, []);
 
   return (
     <form onSubmit={submit} className="space-y-5">
@@ -320,8 +337,8 @@ export function ComposeForm({ profile }: { profile: PublicProfile }) {
                 id="unlock"
                 type="datetime-local"
                 value={unlockAt}
-                min={minDate}
-                max={maxDate}
+                min={dateBounds?.min}
+                max={dateBounds?.max}
                 onChange={(e) => setUnlockAt(e.target.value)}
                 className="mt-2.5 h-11 w-full rounded-lg border border-ink/12 bg-surface px-3 text-[15px] text-ink focus:border-ember focus:outline-none focus:ring-4 focus:ring-ember/15"
               />
