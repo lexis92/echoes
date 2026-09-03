@@ -35,7 +35,7 @@ export async function summariseMessage(content: string): Promise<MessageSummary 
   const openai = getClient();
   if (!openai) return null;
 
-  const model = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+  const model = process.env.OPENAI_MODEL?.trim() || "gpt-4o-mini";
 
   try {
     const response = await openai.chat.completions.create({

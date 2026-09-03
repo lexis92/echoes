@@ -6,7 +6,7 @@ import posthog from "posthog-js";
 import { PostHogProvider as Provider } from "posthog-js/react";
 
 const KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://eu.i.posthog.com";
+const HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST?.trim() || "https://eu.i.posthog.com";
 
 let initialised = false;
 

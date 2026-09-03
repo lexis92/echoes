@@ -13,14 +13,26 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { escapeHtml, layout, sendEmail } from "../_shared/email.ts";
 
-const SITE_URL = Deno.env.get("SITE_URL") ?? "http://localhost:3000";
-const TRASH_RETENTION_DAYS = Number(Deno.env.get("TRASH_RETENTION_DAYS") ?? "30");
+const SITE_URL = Deno.env.get("SITE_URL")?.trim() || "http://localhost:3000";
+// Number("") is 0, and retention 0 deletes everything currently in the trash
+// rather than nothing, so an empty or junk value must not reach the purge.
+const TRASH_RETENTION_DAYS = (() => {
+  const raw = Deno.env.get("TRASH_RETENTION_DAYS")?.trim();
+  const parsed = raw ? Number(raw) : NaN;
+  if (!Number.isFinite(parsed) || parsed < 1) {
+    if (raw) console.warn(`[cron] ignoring TRASH_RETENTION_DAYS="${raw}", using 30`);
+    return 30;
+  }
+  return Math.floor(parsed);
+})();
 
 function authorised(req: Request) {
   const secret = Deno.env.get("CRON_SECRET");
   const header = req.headers.get("authorization") ?? "";
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-  if (header === `Bearer ${serviceKey}`) return true;
+  // Guarded against empty: otherwise this compares against the literal
+  // "Bearer " and anyone sending exactly that header is let straight in.
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")?.trim();
+  if (serviceKey && header === `Bearer ${serviceKey}`) return true;
   return Boolean(secret) && header === `Bearer ${secret}`;
 }
 

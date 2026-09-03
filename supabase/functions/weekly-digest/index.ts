@@ -9,13 +9,15 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { escapeHtml, layout, sendEmail } from "../_shared/email.ts";
 
-const SITE_URL = Deno.env.get("SITE_URL") ?? "http://localhost:3000";
+const SITE_URL = Deno.env.get("SITE_URL")?.trim() || "http://localhost:3000";
 
 function authorised(req: Request) {
   const secret = Deno.env.get("CRON_SECRET");
   const header = req.headers.get("authorization") ?? "";
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-  if (header === `Bearer ${serviceKey}`) return true;
+  // Guarded against empty: otherwise this compares against the literal
+  // "Bearer " and anyone sending exactly that header is let straight in.
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")?.trim();
+  if (serviceKey && header === `Bearer ${serviceKey}`) return true;
   return Boolean(secret) && header === `Bearer ${secret}`;
 }
 

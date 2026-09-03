@@ -9,7 +9,7 @@ function getClient() {
   if (!key) return null;
   if (!client) {
     client = new PostHog(key, {
-      host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://eu.i.posthog.com",
+      host: process.env.NEXT_PUBLIC_POSTHOG_HOST?.trim() || "https://eu.i.posthog.com",
       flushAt: 1,
       flushInterval: 0,
     });
